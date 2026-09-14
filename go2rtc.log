@@ -1,0 +1,346 @@
+09:41:21.428 INF go2rtc platform=linux/amd64 revision=b5948cf version=1.9.14
+09:41:21.428 INF config path=/home/ubuntu/DVR/go2rtc.yaml
+09:41:21.430 INF [api] listen addr=:1984
+09:41:21.432 INF [rtsp] listen addr=:8560
+09:41:21.434 INF [webrtc] listen tcp addr=[::]:8555
+09:41:21.435 INF [webrtc] listen udp addr=192.168.2.110:8555
+09:41:21.435 INF [webrtc] listen udp addr=192.168.2.113:8555
+09:41:21.435 INF [webrtc] listen udp addr=100.105.125.113:8555
+09:41:21.435 INF [webrtc] listen udp addr=172.21.0.1:8555
+09:41:21.435 INF [webrtc] listen udp addr=172.18.0.1:8555
+09:41:21.435 INF [webrtc] listen udp addr=172.20.0.1:8555
+09:41:21.435 INF [webrtc] listen udp addr=172.19.0.1:8555
+09:41:21.435 INF [webrtc] listen udp addr=172.17.0.1:8555
+09:41:32.734 ERR github.com/AlexxIT/go2rtc/internal/api/ws/ws.go:106 > host=192.168.2.110:1984 origin=http://192.168.2.110:8080 error="websocket: request origin not allowed by Upgrader.CheckOrigin"
+09:42:32.758 ERR github.com/AlexxIT/go2rtc/internal/api/ws/ws.go:106 > host=192.168.2.110:1984 origin=http://192.168.2.110:8080 error="websocket: request origin not allowed by Upgrader.CheckOrigin"
+09:43:32.789 ERR github.com/AlexxIT/go2rtc/internal/api/ws/ws.go:106 > host=192.168.2.110:1984 origin=http://192.168.2.110:8080 error="websocket: request origin not allowed by Upgrader.CheckOrigin"
+09:44:33.133 ERR github.com/AlexxIT/go2rtc/internal/api/ws/ws.go:106 > host=192.168.2.110:1984 origin=http://192.168.2.110:8080 error="websocket: request origin not allowed by Upgrader.CheckOrigin"
+09:45:33.315 ERR github.com/AlexxIT/go2rtc/internal/api/ws/ws.go:106 > host=192.168.2.110:1984 origin=http://192.168.2.110:8080 error="websocket: request origin not allowed by Upgrader.CheckOrigin"
+09:46:33.320 ERR github.com/AlexxIT/go2rtc/internal/api/ws/ws.go:106 > host=192.168.2.110:1984 origin=http://192.168.2.110:8080 error="websocket: request origin not allowed by Upgrader.CheckOrigin"
+09:47:33.357 ERR github.com/AlexxIT/go2rtc/internal/api/ws/ws.go:106 > host=192.168.2.110:1984 origin=http://192.168.2.110:8080 error="websocket: request origin not allowed by Upgrader.CheckOrigin"
+09:48:33.382 ERR github.com/AlexxIT/go2rtc/internal/api/ws/ws.go:106 > host=192.168.2.110:1984 origin=http://192.168.2.110:8080 error="websocket: request origin not allowed by Upgrader.CheckOrigin"
+09:49:33.681 ERR github.com/AlexxIT/go2rtc/internal/api/ws/ws.go:106 > host=192.168.2.110:1984 origin=http://192.168.2.110:8080 error="websocket: request origin not allowed by Upgrader.CheckOrigin"
+09:50:34.057 ERR github.com/AlexxIT/go2rtc/internal/api/ws/ws.go:106 > host=192.168.2.110:1984 origin=http://192.168.2.110:8080 error="websocket: request origin not allowed by Upgrader.CheckOrigin"
+exit with signal: terminated
+09:57:41.655 INF go2rtc platform=linux/amd64 revision=b5948cf version=1.9.14
+09:57:41.655 INF config path=/home/ubuntu/DVR/go2rtc.yaml
+09:57:41.658 INF [api] listen addr=:1984
+09:57:41.660 INF [rtsp] listen addr=:8560
+09:57:41.661 INF [webrtc] listen tcp addr=[::]:8555
+09:57:41.662 INF [webrtc] listen udp addr=192.168.2.110:8555
+09:57:41.662 INF [webrtc] listen udp addr=192.168.2.113:8555
+09:57:41.662 INF [webrtc] listen udp addr=100.105.125.113:8555
+09:57:41.662 INF [webrtc] listen udp addr=172.21.0.1:8555
+09:57:41.662 INF [webrtc] listen udp addr=172.18.0.1:8555
+09:57:41.662 INF [webrtc] listen udp addr=172.20.0.1:8555
+09:57:41.662 INF [webrtc] listen udp addr=172.19.0.1:8555
+09:57:41.662 INF [webrtc] listen udp addr=172.17.0.1:8555
+exit with signal: terminated
+10:05:36.426 INF go2rtc platform=linux/amd64 revision=b5948cf version=1.9.14
+10:05:36.426 INF config path=/home/ubuntu/DVR/go2rtc.yaml
+10:05:36.431 INF [api] listen addr=:1984
+10:05:36.438 INF [rtsp] listen addr=:8560
+10:05:36.441 INF [webrtc] listen tcp addr=[::]:8555
+10:05:36.442 INF [webrtc] listen udp addr=192.168.2.110:8555
+10:05:36.442 INF [webrtc] listen udp addr=192.168.2.113:8555
+10:05:36.443 INF [webrtc] listen udp addr=100.105.125.113:8555
+10:05:36.443 INF [webrtc] listen udp addr=172.21.0.1:8555
+10:05:36.444 INF [webrtc] listen udp addr=172.18.0.1:8555
+10:05:36.446 INF [webrtc] listen udp addr=172.20.0.1:8555
+10:05:36.446 INF [webrtc] listen udp addr=172.19.0.1:8555
+10:05:36.446 INF [webrtc] listen udp addr=172.17.0.1:8555
+10:08:20.481 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.110:49296->192.168.2.20:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.20:554/cam/realmonitor?channel=11&subtype=1
+10:08:20.482 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.110:49322->192.168.2.20:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.20:554/cam/realmonitor?channel=13&subtype=1
+10:08:20.541 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.110:49332->192.168.2.20:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.20:554/cam/realmonitor?channel=15&subtype=1
+10:08:20.549 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.110:49228->192.168.2.20:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.20:554/cam/realmonitor?channel=7&subtype=1
+10:08:20.599 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.110:49354->192.168.2.20:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.20:554/cam/realmonitor?channel=16&subtype=1
+10:08:20.601 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.110:49102->192.168.2.20:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.20:554/cam/realmonitor?channel=2&subtype=1
+10:08:20.672 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.110:49172->192.168.2.20:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.20:554/cam/realmonitor?channel=4&subtype=1
+10:08:20.734 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.110:49278->192.168.2.20:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.20:554/cam/realmonitor?channel=10&subtype=1
+10:08:20.751 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.110:49294->192.168.2.20:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.20:554/cam/realmonitor?channel=9&subtype=1
+10:08:21.087 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.110:44578->192.168.2.20:554: read: connection reset by peer" url=rtsp://admin:Araliyaflower%2324@192.168.2.20:554/cam/realmonitor?channel=2&subtype=0
+10:08:21.222 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.110:49252->192.168.2.20:554: read: connection reset by peer" url=rtsp://admin:Araliyaflower%2324@192.168.2.20:554/cam/realmonitor?channel=8&subtype=1
+10:08:21.353 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.110:49306->192.168.2.20:554: read: connection reset by peer" url=rtsp://admin:Araliyaflower%2324@192.168.2.20:554/cam/realmonitor?channel=12&subtype=1
+10:08:21.393 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.110:49120->192.168.2.20:554: read: connection reset by peer" url=rtsp://admin:Araliyaflower%2324@192.168.2.20:554/cam/realmonitor?channel=1&subtype=1
+10:08:21.394 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.110:49240->192.168.2.20:554: read: connection reset by peer" url=rtsp://admin:Araliyaflower%2324@192.168.2.20:554/cam/realmonitor?channel=6&subtype=1
+10:08:21.394 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.110:49236->192.168.2.20:554: read: connection reset by peer" url=rtsp://admin:Araliyaflower%2324@192.168.2.20:554/cam/realmonitor?channel=5&subtype=1
+10:08:21.394 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.110:49130->192.168.2.20:554: read: connection reset by peer" url=rtsp://admin:Araliyaflower%2324@192.168.2.20:554/cam/realmonitor?channel=3&subtype=1
+10:08:21.394 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.110:49340->192.168.2.20:554: read: connection reset by peer" url=rtsp://admin:Araliyaflower%2324@192.168.2.20:554/cam/realmonitor?channel=14&subtype=1
+10:58:21.169 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.110:45364->192.168.2.95:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.95:554/cam/realmonitor?channel=3&subtype=1
+10:58:21.169 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.110:45212->192.168.2.95:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.95:554/cam/realmonitor?channel=2&subtype=1
+10:58:21.179 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.110:45368->192.168.2.95:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.95:554/cam/realmonitor?channel=12&subtype=1
+10:58:21.180 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.110:54038->192.168.2.95:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.95:554/cam/realmonitor?channel=13&subtype=1
+10:58:21.222 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.110:45428->192.168.2.95:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.95:554/cam/realmonitor?channel=8&subtype=1
+10:58:21.226 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.110:45396->192.168.2.95:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.95:554/cam/realmonitor?channel=5&subtype=1
+10:58:21.226 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.110:45438->192.168.2.95:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.95:554/cam/realmonitor?channel=9&subtype=1
+10:58:21.226 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.110:45382->192.168.2.95:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.95:554/cam/realmonitor?channel=4&subtype=1
+10:58:21.228 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.110:45412->192.168.2.95:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.95:554/cam/realmonitor?channel=6&subtype=1
+10:58:21.228 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.110:45414->192.168.2.95:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.95:554/cam/realmonitor?channel=7&subtype=1
+10:58:21.249 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.110:45436->192.168.2.95:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.95:554/cam/realmonitor?channel=1&subtype=1
+10:58:21.266 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.110:45452->192.168.2.95:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.95:554/cam/realmonitor?channel=15&subtype=1
+10:58:21.268 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.110:45442->192.168.2.95:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.95:554/cam/realmonitor?channel=10&subtype=1
+10:58:21.301 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.110:45466->192.168.2.95:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.95:554/cam/realmonitor?channel=11&subtype=1
+10:58:21.327 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.110:45372->192.168.2.95:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.95:554/cam/realmonitor?channel=14&subtype=1
+10:58:21.327 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.110:45474->192.168.2.95:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.95:554/cam/realmonitor?channel=16&subtype=1
+11:44:48.152 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.110:51766->192.168.2.20:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.20:554/cam/realmonitor?channel=11&subtype=1
+11:44:48.165 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.110:51806->192.168.2.20:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.20:554/cam/realmonitor?channel=12&subtype=1
+11:44:48.265 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.110:48156->192.168.2.20:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.20:554/cam/realmonitor?channel=1&subtype=0
+11:45:29.248 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.110:48218->192.168.2.20:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.20:554/cam/realmonitor?channel=4&subtype=1
+11:45:29.332 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.110:48224->192.168.2.20:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.20:554/cam/realmonitor?channel=2&subtype=1
+11:45:29.332 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.110:48234->192.168.2.20:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.20:554/cam/realmonitor?channel=3&subtype=1
+11:45:29.332 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.110:48208->192.168.2.20:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.20:554/cam/realmonitor?channel=5&subtype=1
+11:45:29.381 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.110:48210->192.168.2.20:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.20:554/cam/realmonitor?channel=6&subtype=1
+11:45:29.382 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.110:51830->192.168.2.20:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.20:554/cam/realmonitor?channel=1&subtype=0
+11:47:10.213 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.110:52696->192.168.2.20:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.20:554/cam/realmonitor?channel=2&subtype=1
+11:47:10.213 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.110:54320->192.168.2.20:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.20:554/cam/realmonitor?channel=3&subtype=1
+11:47:10.235 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.110:54336->192.168.2.20:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.20:554/cam/realmonitor?channel=5&subtype=1
+11:47:10.238 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.110:54370->192.168.2.20:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.20:554/cam/realmonitor?channel=6&subtype=1
+11:47:10.259 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.110:54344->192.168.2.20:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.20:554/cam/realmonitor?channel=4&subtype=1
+11:47:10.297 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.110:54358->192.168.2.20:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.20:554/cam/realmonitor?channel=1&subtype=0
+exit with signal: terminated
+10:36:44.141 INF go2rtc platform=linux/amd64 revision=b5948cf version=1.9.14
+10:36:44.141 INF config path=/home/ubuntu/DVR/go2rtc.yaml
+10:36:44.145 INF [api] listen addr=:1984
+10:36:44.149 INF [rtsp] listen addr=:8560
+10:36:44.152 INF [webrtc] listen tcp addr=[::]:8555
+10:36:44.152 INF [webrtc] listen udp addr=192.168.2.50:8555
+10:36:44.152 INF [webrtc] listen udp addr=192.168.2.113:8555
+10:36:44.152 INF [webrtc] listen udp addr=100.105.125.113:8555
+10:36:44.152 INF [webrtc] listen udp addr=172.21.0.1:8555
+10:36:44.152 INF [webrtc] listen udp addr=172.18.0.1:8555
+10:36:44.152 INF [webrtc] listen udp addr=172.20.0.1:8555
+10:36:44.153 INF [webrtc] listen udp addr=172.17.0.1:8555
+10:36:44.154 INF [webrtc] listen udp addr=172.19.0.1:8555
+10:37:04.454 INF go2rtc platform=linux/amd64 revision=b5948cf version=1.9.14
+10:37:04.454 INF config path=/home/ubuntu/DVR/go2rtc.yaml
+10:37:04.457 INF [api] listen addr=:1984
+10:37:04.463 INF [rtsp] listen addr=:8560
+10:37:04.465 INF [webrtc] listen tcp addr=[::]:8555
+10:37:04.466 INF [webrtc] listen udp addr=192.168.2.50:8555
+10:37:04.466 INF [webrtc] listen udp addr=192.168.2.113:8555
+10:37:04.466 INF [webrtc] listen udp addr=100.105.125.113:8555
+10:37:04.466 INF [webrtc] listen udp addr=172.21.0.1:8555
+10:37:04.466 INF [webrtc] listen udp addr=172.18.0.1:8555
+10:37:04.466 INF [webrtc] listen udp addr=172.20.0.1:8555
+10:37:04.467 INF [webrtc] listen udp addr=172.17.0.1:8555
+10:37:04.469 INF [webrtc] listen udp addr=172.19.0.1:8555
+10:37:24.321 INF go2rtc platform=linux/amd64 revision=b5948cf version=1.9.14
+10:37:24.322 INF config path=/home/ubuntu/DVR/go2rtc.yaml
+10:37:24.325 INF [api] listen addr=:1984
+10:37:24.330 INF [rtsp] listen addr=:8560
+10:37:24.332 INF [webrtc] listen tcp addr=[::]:8555
+10:37:24.334 INF [webrtc] listen udp addr=192.168.2.50:8555
+10:37:24.334 INF [webrtc] listen udp addr=192.168.2.113:8555
+10:37:24.334 INF [webrtc] listen udp addr=100.105.125.113:8555
+10:37:24.335 INF [webrtc] listen udp addr=172.21.0.1:8555
+10:37:24.335 INF [webrtc] listen udp addr=172.18.0.1:8555
+10:37:24.335 INF [webrtc] listen udp addr=172.20.0.1:8555
+10:37:24.335 INF [webrtc] listen udp addr=172.17.0.1:8555
+10:37:24.335 INF [webrtc] listen udp addr=172.19.0.1:8555
+10:37:42.760 INF go2rtc platform=linux/amd64 revision=b5948cf version=1.9.14
+10:37:42.760 INF config path=/home/ubuntu/DVR/go2rtc.yaml
+10:37:42.764 INF [api] listen addr=:1984
+10:37:42.768 INF [rtsp] listen addr=:8560
+10:37:42.771 INF [webrtc] listen tcp addr=[::]:8555
+10:37:42.772 INF [webrtc] listen udp addr=192.168.2.50:8555
+10:37:42.772 INF [webrtc] listen udp addr=192.168.2.113:8555
+10:37:42.772 INF [webrtc] listen udp addr=100.105.125.113:8555
+10:37:42.772 INF [webrtc] listen udp addr=172.21.0.1:8555
+10:37:42.772 INF [webrtc] listen udp addr=172.18.0.1:8555
+10:37:42.772 INF [webrtc] listen udp addr=172.20.0.1:8555
+10:37:42.773 INF [webrtc] listen udp addr=172.17.0.1:8555
+10:37:42.773 INF [webrtc] listen udp addr=172.19.0.1:8555
+exit with signal: terminated
+10:38:10.150 INF go2rtc platform=linux/amd64 revision=b5948cf version=1.9.14
+10:38:10.150 INF config path=/home/ubuntu/DVR/go2rtc.yaml
+10:38:10.154 INF [api] listen addr=:1984
+10:38:10.158 INF [rtsp] listen addr=:8560
+10:38:10.161 INF [webrtc] listen tcp addr=[::]:8555
+10:38:10.163 INF [webrtc] listen udp addr=192.168.2.50:8555
+10:38:10.163 INF [webrtc] listen udp addr=192.168.2.113:8555
+10:38:10.163 INF [webrtc] listen udp addr=100.105.125.113:8555
+10:38:10.164 INF [webrtc] listen udp addr=172.21.0.1:8555
+10:38:10.164 INF [webrtc] listen udp addr=172.18.0.1:8555
+10:38:10.164 INF [webrtc] listen udp addr=172.20.0.1:8555
+10:38:10.164 INF [webrtc] listen udp addr=172.17.0.1:8555
+10:38:10.164 INF [webrtc] listen udp addr=172.19.0.1:8555
+exit with signal: terminated
+10:38:34.277 INF go2rtc platform=linux/amd64 revision=b5948cf version=1.9.14
+10:38:34.277 INF config path=/home/ubuntu/DVR/go2rtc.yaml
+10:38:34.282 INF [api] listen addr=:1984
+10:38:34.288 INF [rtsp] listen addr=:8560
+10:38:34.291 INF [webrtc] listen tcp addr=[::]:8555
+10:38:34.292 INF [webrtc] listen udp addr=192.168.2.50:8555
+10:38:34.292 INF [webrtc] listen udp addr=192.168.2.113:8555
+10:38:34.292 INF [webrtc] listen udp addr=100.105.125.113:8555
+10:38:34.292 INF [webrtc] listen udp addr=172.21.0.1:8555
+10:38:34.293 INF [webrtc] listen udp addr=172.18.0.1:8555
+10:38:34.293 INF [webrtc] listen udp addr=172.20.0.1:8555
+10:38:34.293 INF [webrtc] listen udp addr=172.17.0.1:8555
+10:38:34.293 INF [webrtc] listen udp addr=172.19.0.1:8555
+exit with signal: terminated
+10:38:38.483 INF go2rtc platform=linux/amd64 revision=b5948cf version=1.9.14
+10:38:38.484 INF config path=/home/ubuntu/DVR/go2rtc.yaml
+10:38:38.488 INF [api] listen addr=:1984
+10:38:38.494 INF [rtsp] listen addr=:8560
+10:38:38.497 INF [webrtc] listen tcp addr=[::]:8555
+10:38:38.498 INF [webrtc] listen udp addr=192.168.2.50:8555
+10:38:38.498 INF [webrtc] listen udp addr=192.168.2.113:8555
+10:38:38.498 INF [webrtc] listen udp addr=100.105.125.113:8555
+10:38:38.498 INF [webrtc] listen udp addr=172.21.0.1:8555
+10:38:38.499 INF [webrtc] listen udp addr=172.18.0.1:8555
+10:38:38.499 INF [webrtc] listen udp addr=172.20.0.1:8555
+10:38:38.501 INF [webrtc] listen udp addr=172.17.0.1:8555
+10:38:38.501 INF [webrtc] listen udp addr=172.19.0.1:8555
+10:38:52.428 INF go2rtc platform=linux/amd64 revision=b5948cf version=1.9.14
+10:38:52.428 INF config path=/home/ubuntu/DVR/go2rtc.yaml
+10:38:52.431 ERR [api] listen error="listen tcp :1984: bind: address already in use"
+10:38:52.435 ERR [rtsp] listen error="listen tcp :8560: bind: address already in use"
+10:40:26.823 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:51332->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=2&subtype=1
+10:40:26.843 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:51162->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=2&subtype=0
+10:40:26.991 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:38022->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=1&subtype=0
+10:40:27.095 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:51322->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=1&subtype=1
+10:40:36.894 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:41522->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=2&subtype=0
+10:40:36.952 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:41550->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=1&subtype=1
+10:40:36.966 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:41536->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=1&subtype=0
+10:40:37.026 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:41516->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=2&subtype=1
+10:40:46.875 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:42182->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=2&subtype=0
+10:40:46.883 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:42226->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=2&subtype=1
+10:40:46.933 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:42200->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=1&subtype=1
+10:40:46.977 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:42212->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=1&subtype=0
+10:40:56.780 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:54688->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=14&subtype=1
+10:40:56.789 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:54722->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=13&subtype=1
+10:40:56.865 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:54710->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=9&subtype=1
+10:40:56.876 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:54738->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=16&subtype=1
+10:40:56.906 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:54442->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=1&subtype=1
+10:40:56.915 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:54428->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=2&subtype=1
+10:40:56.924 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:54686->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=15&subtype=1
+10:40:56.943 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:54680->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=12&subtype=1
+10:40:56.953 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:54640->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=7&subtype=1
+10:40:56.953 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:54604->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=3&subtype=1
+10:40:57.001 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:54670->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=10&subtype=1
+10:40:57.003 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:54712->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=11&subtype=1
+10:40:57.033 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:54700->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=8&subtype=1
+10:40:57.063 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:54634->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=6&subtype=1
+10:40:57.063 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:54654->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=5&subtype=1
+10:40:57.263 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:54618->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=4&subtype=1
+10:42:17.321 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:48524->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=9&subtype=1
+10:42:17.321 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:48542->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=13&subtype=1
+10:42:17.324 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:48478->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=2&subtype=1
+10:42:17.324 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:48520->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=12&subtype=1
+10:42:17.328 INF [streams] can't get track error="read tcp 192.168.2.50:48550->192.168.2.40:554: i/o timeout"
+10:42:17.329 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:48540->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=10&subtype=1
+10:42:17.330 INF [streams] can't get track error="read tcp 192.168.2.50:48564->192.168.2.40:554: i/o timeout"
+10:42:17.334 INF [streams] can't get track error="read tcp 192.168.2.50:48576->192.168.2.40:554: i/o timeout"
+10:42:17.374 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:48552->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=14&subtype=1
+10:42:17.415 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:48504->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=7&subtype=1
+10:42:17.416 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:48488->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=4&subtype=1
+10:42:17.418 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:48502->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=6&subtype=1
+10:42:17.498 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:48302->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=1&subtype=1
+10:42:17.645 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:48474->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=8&subtype=1
+10:42:17.645 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:48498->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=5&subtype=1
+10:42:17.654 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:48470->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=3&subtype=1
+10:42:27.467 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:38290->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=1&subtype=1
+10:42:27.477 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:38192->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=2&subtype=1
+10:42:27.554 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:38258->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=7&subtype=1
+10:42:27.558 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:38278->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=4&subtype=1
+10:42:27.558 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:38266->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=6&subtype=1
+10:42:27.647 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:38222->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=14&subtype=1
+10:42:27.662 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:38210->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=9&subtype=1
+10:42:27.662 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:38174->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=12&subtype=1
+10:42:27.665 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:38346->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=3&subtype=1
+10:42:27.705 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:38188->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=13&subtype=1
+10:42:27.705 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:38208->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=10&subtype=1
+10:42:27.813 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:38300->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=8&subtype=1
+10:42:27.853 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:38334->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=5&subtype=1
+10:42:37.444 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:56174->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=2&subtype=1
+10:42:37.508 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:56158->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=1&subtype=1
+10:42:37.551 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:56340->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=10&subtype=1
+10:42:37.552 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:56280->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=9&subtype=1
+10:42:37.552 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:56334->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=13&subtype=1
+10:42:37.551 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:56288->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=12&subtype=1
+10:42:37.591 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:56272->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=14&subtype=1
+10:42:37.643 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:56382->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=8&subtype=1
+10:42:37.643 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:56370->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=5&subtype=1
+10:42:37.665 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:56322->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=3&subtype=1
+10:42:37.717 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:56212->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=4&subtype=1
+10:42:37.717 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:56210->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=7&subtype=1
+10:42:37.719 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:56218->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=6&subtype=1
+10:44:47.603 INF [streams] can't get track error="read tcp 192.168.2.50:51072->192.168.2.40:554: i/o timeout"
+10:44:47.618 INF [streams] can't get track error="read tcp 192.168.2.50:51112->192.168.2.40:554: i/o timeout"
+10:44:47.682 INF [streams] can't get track error="read tcp 192.168.2.50:51128->192.168.2.40:554: i/o timeout"
+10:44:47.706 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:51164->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=12&subtype=1
+10:44:47.707 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:51102->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=6&subtype=1
+10:44:47.708 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:51136->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=8&subtype=1
+10:44:47.708 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:51124->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=7&subtype=1
+10:44:47.709 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:50952->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=1&subtype=1
+10:44:47.743 INF [streams] can't get track error="read tcp 192.168.2.50:51144->192.168.2.40:554: i/o timeout"
+10:44:47.745 INF [streams] can't get track error="read tcp 192.168.2.50:51150->192.168.2.40:554: i/o timeout"
+10:44:47.772 INF [streams] can't get track error="read tcp 192.168.2.50:51176->192.168.2.40:554: i/o timeout"
+10:44:47.776 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:51172->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=11&subtype=1
+10:44:47.776 INF [streams] can't get track error="read tcp 192.168.2.50:51184->192.168.2.40:554: i/o timeout"
+10:44:47.782 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:51180->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=16&subtype=1
+10:44:57.495 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:49836->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=1&subtype=1
+10:44:57.535 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:49844->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=12&subtype=1
+10:44:57.556 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:49854->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=16&subtype=1
+10:44:57.557 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:49890->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=11&subtype=1
+10:44:57.576 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:51072->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=2&subtype=1
+10:44:57.595 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:49834->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=6&subtype=1
+10:44:57.822 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:49884->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=7&subtype=1
+10:44:57.829 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:49876->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=8&subtype=1
+10:45:06.408 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:49776->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=2&subtype=1
+11:00:13.206 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:46188->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=2&subtype=1
+11:00:13.208 WRN github.com/AlexxIT/go2rtc/internal/streams/producer.go:170 > error="read tcp 192.168.2.50:44292->192.168.2.40:554: i/o timeout" url=rtsp://admin:Araliyaflower%2324@192.168.2.40:554/cam/realmonitor?channel=1&subtype=1
+exit with signal: terminated
+exit with signal: terminated
+11:00:27.526 INF go2rtc platform=linux/amd64 revision=b5948cf version=1.9.14
+11:00:27.526 INF config path=/home/ubuntu/DVR/go2rtc.yaml
+11:00:27.532 INF [api] listen addr=:1984
+11:00:27.539 INF [rtsp] listen addr=:8560
+11:00:27.543 INF [webrtc] listen tcp addr=[::]:8555
+11:00:27.544 INF [webrtc] listen udp addr=192.168.2.50:8555
+11:00:27.544 INF [webrtc] listen udp addr=192.168.2.113:8555
+11:00:27.544 INF [webrtc] listen udp addr=100.105.125.113:8555
+11:00:27.544 INF [webrtc] listen udp addr=172.21.0.1:8555
+11:00:27.544 INF [webrtc] listen udp addr=172.18.0.1:8555
+11:00:27.544 INF [webrtc] listen udp addr=172.20.0.1:8555
+11:00:27.546 INF [webrtc] listen udp addr=172.17.0.1:8555
+11:00:27.546 INF [webrtc] listen udp addr=172.19.0.1:8555
+11:00:50.721 INF go2rtc platform=linux/amd64 revision=b5948cf version=1.9.14
+11:00:50.721 INF config path=/home/ubuntu/DVR/go2rtc.yaml
+11:00:50.726 ERR [api] listen error="listen tcp :1984: bind: address already in use"
+11:00:50.733 ERR [rtsp] listen error="listen tcp :8560: bind: address already in use"
+11:03:55.658 INF go2rtc platform=linux/amd64 revision=b5948cf version=1.9.14
+11:03:55.659 INF config path=/home/ubuntu/DVR/go2rtc.yaml
+11:03:55.664 ERR [api] listen error="listen tcp :1984: bind: address already in use"
+11:03:55.671 ERR [rtsp] listen error="listen tcp :8560: bind: address already in use"
+exit with signal: terminated
+exit with signal: terminated
+exit with signal: terminated
+11:04:20.158 INF go2rtc platform=linux/amd64 revision=b5948cf version=1.9.14
+11:04:20.159 INF config path=/home/ubuntu/DVR/go2rtc.yaml
+11:04:20.167 INF [api] listen addr=:1984
+11:04:20.177 INF [rtsp] listen addr=:8560
+11:04:20.183 INF [webrtc] listen tcp addr=[::]:8555
+11:04:20.185 INF [webrtc] listen udp addr=192.168.2.50:8555
+11:04:20.185 INF [webrtc] listen udp addr=192.168.2.113:8555
+11:04:20.185 INF [webrtc] listen udp addr=100.105.125.113:8555
+11:04:20.186 INF [webrtc] listen udp addr=172.21.0.1:8555
+11:04:20.188 INF [webrtc] listen udp addr=172.18.0.1:8555
+11:04:20.188 INF [webrtc] listen udp addr=172.20.0.1:8555
+11:04:20.189 INF [webrtc] listen udp addr=172.17.0.1:8555
+11:04:20.189 INF [webrtc] listen udp addr=172.19.0.1:8555
+exit with signal: terminated
+11:07:27.987 INF go2rtc platform=linux/amd64 revision=b5948cf version=1.9.14
+11:07:27.988 INF config path=/home/ubuntu/DVR/go2rtc.yaml
+11:07:27.992 INF [api] listen addr=:1984
+11:07:27.997 INF [rtsp] listen addr=:8560
+11:07:28.000 INF [webrtc] listen tcp addr=[::]:8555
+11:07:28.001 INF [webrtc] listen udp addr=192.168.2.50:8555
+11:07:28.001 INF [webrtc] listen udp addr=192.168.2.113:8555
+11:07:28.001 INF [webrtc] listen udp addr=100.105.125.113:8555
+11:07:28.001 INF [webrtc] listen udp addr=172.21.0.1:8555
+11:07:28.002 INF [webrtc] listen udp addr=172.18.0.1:8555
+11:07:28.003 INF [webrtc] listen udp addr=172.20.0.1:8555
+11:07:28.003 INF [webrtc] listen udp addr=172.17.0.1:8555
+11:07:28.003 INF [webrtc] listen udp addr=172.19.0.1:8555

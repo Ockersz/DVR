@@ -1,0 +1,2006 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Security Operations Video Wall (16-Cam)</title>
+<style>
+  :root {
+    --bg-dark: #07090e;
+    --panel-bg: rgba(14, 20, 32, 0.94);
+    --panel-card: #0f172a;
+    --panel-border: #1e293b;
+    --panel-border-hover: #334155;
+    --accent: #3b82f6;
+    --accent-hover: #60a5fa;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --live-green: #10b981;
+    --down-red: #ef4444;
+    --amber-warn: #f59e0b;
+    --drag-glow: rgba(59, 130, 246, 0.55);
+    --font: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    height: 100%;
+    width: 100%;
+    background: var(--bg-dark);
+    color: var(--text-main);
+    font-family: var(--font);
+    overflow: hidden;
+    user-select: none;
+  }
+
+  #app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  /* Header Bar */
+  header {
+    flex: 0 0 50px;
+    background: var(--panel-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--panel-border);
+    display: flex;
+    align-items: center;
+    padding: 0 14px;
+    gap: 12px;
+    z-index: 20;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .live-pulse {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--live-green);
+    box-shadow: 0 0 8px var(--live-green);
+    animation: pulse 2s infinite ease-in-out;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.45; transform: scale(0.85); }
+  }
+  .brand-text {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: var(--text-main);
+  }
+
+  .divider {
+    width: 1px;
+    height: 24px;
+    background: var(--panel-border);
+  }
+
+  /* Slide Carousel Controls */
+  .slide-nav {
+    display: flex;
+    align-items: center;
+    background: rgba(15, 23, 42, 0.85);
+    padding: 3px 6px;
+    border-radius: 8px;
+    border: 1px solid var(--panel-border);
+    gap: 6px;
+  }
+  .slide-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 13px;
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .slide-btn:hover {
+    color: var(--text-main);
+    background: rgba(255, 255, 255, 0.08);
+  }
+  .slide-select {
+    background: rgba(30, 41, 59, 0.9);
+    color: var(--text-main);
+    border: 1px solid var(--panel-border);
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    outline: none;
+    font-family: inherit;
+  }
+  .slide-select:hover {
+    border-color: var(--accent);
+  }
+
+  /* Drag Tip Indicator */
+  .drag-tip {
+    font-size: 11px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 4px 8px;
+    border-radius: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .spacer { flex: 1; }
+
+  /* Control Buttons */
+  .btn-ctrl {
+    background: rgba(30, 41, 59, 0.8);
+    color: var(--text-main);
+    border: 1px solid var(--panel-border);
+    border-radius: 6px;
+    padding: 5px 11px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    outline: none;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .btn-ctrl:hover {
+    border-color: var(--accent);
+    background: rgba(51, 65, 85, 0.9);
+  }
+  .btn-ctrl:active { transform: scale(0.97); }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent-hover);
+  }
+  .btn-primary:hover {
+    background: var(--accent-hover);
+  }
+
+  /* Health Stats & Clock */
+  .stats-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+  .stat-badge {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .stat-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+  }
+  .stat-dot.live { background: var(--live-green); box-shadow: 0 0 5px var(--live-green); }
+  .stat-dot.down { background: var(--down-red); }
+  .stat-val { color: var(--text-main); font-weight: 600; }
+
+  #clock {
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+    color: #cbd5e1;
+    background: rgba(0,0,0,0.45);
+    padding: 5px 9px;
+    border-radius: 5px;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+
+  /* Viewport Main Area */
+  #viewport {
+    flex: 1 1 auto;
+    position: relative;
+    padding: 6px;
+    overflow: hidden;
+    background: #04060a;
+  }
+
+  /* 16 Camera 4x4 Grid */
+  #grid16Container {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: 6px;
+  }
+
+  /* Draggable Video Tile */
+  .tile {
+    position: relative;
+    background: #000;
+    border: 1px solid var(--panel-border);
+    border-radius: 6px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: grab;
+    transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+  }
+  .tile:hover {
+    border-color: var(--accent);
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.25);
+  }
+
+  /* Dragging States */
+  .tile.is-dragging {
+    opacity: 0.4;
+    cursor: grabbing;
+    border: 2px dashed var(--accent) !important;
+    transform: scale(0.97);
+  }
+  .tile.drag-over {
+    border: 2px solid var(--accent-hover) !important;
+    background: rgba(59, 130, 246, 0.18) !important;
+    box-shadow: 0 0 18px var(--drag-glow) !important;
+    transform: scale(1.02);
+    z-index: 10;
+  }
+
+  .tile video-stream, .tile video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: #000;
+    display: block;
+    pointer-events: none;
+  }
+
+  /* Slot Badge (Grip Handle) */
+  .tile-grip {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    background: rgba(15, 23, 42, 0.85);
+    color: var(--text-muted);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    z-index: 4;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: grab;
+    backdrop-filter: blur(4px);
+    transition: all 0.15s ease;
+  }
+  .tile:hover .tile-grip {
+    color: var(--text-main);
+    border-color: var(--accent);
+    background: rgba(30, 41, 59, 0.95);
+  }
+  .tile-grip svg {
+    width: 10px;
+    height: 10px;
+    fill: currentColor;
+    opacity: 0.8;
+  }
+
+  /* Tile OSD Footer */
+  .tile-osd {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    padding: 6px 8px;
+    font-size: 11px;
+    font-weight: 500;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.45) 70%, transparent 100%);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    pointer-events: none;
+    z-index: 3;
+  }
+  .tile-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--text-muted);
+    flex-shrink: 0;
+    transition: background-color 0.3s;
+  }
+  .tile-dot.live {
+    background: var(--live-green);
+    box-shadow: 0 0 6px var(--live-green);
+  }
+  .tile-dot.down {
+    background: var(--down-red);
+  }
+
+  .tile-name {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.9);
+  }
+  .tile-group {
+    font-size: 10px;
+    color: var(--text-muted);
+    background: rgba(0,0,0,0.55);
+    padding: 1px 5px;
+    border-radius: 3px;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  /* Tile Action Buttons (Hover) */
+  .tile-btn-group {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    pointer-events: auto;
+  }
+  .tile-act-btn {
+    opacity: 0;
+    color: #cbd5e1;
+    cursor: pointer;
+    font-size: 12px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: rgba(15, 23, 42, 0.85);
+    border: 1px solid rgba(255,255,255,0.15);
+    transition: all 0.15s;
+  }
+  .tile:hover .tile-act-btn { opacity: 1; }
+  .tile-act-btn:hover {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent-hover);
+  }
+
+  /* ==========================================================================
+     MODALS & DIALOGS
+     ========================================================================== */
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.82);
+    backdrop-filter: blur(8px);
+    z-index: 100;
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-backdrop.active { display: flex; }
+
+  /* 1. Full Settings Manager Modal */
+  .settings-modal-window {
+    background: #0b1120;
+    border: 1px solid var(--panel-border);
+    border-radius: 12px;
+    width: 900px;
+    max-width: 95vw;
+    max-height: 88vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.85);
+    overflow: hidden;
+  }
+  .settings-header {
+    flex: 0 0 54px;
+    background: rgba(15, 23, 42, 0.95);
+    padding: 0 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid var(--panel-border);
+  }
+  .settings-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .settings-search-bar {
+    flex: 0 0 52px;
+    background: rgba(15, 23, 42, 0.6);
+    padding: 8px 18px;
+    border-bottom: 1px solid var(--panel-border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .search-input-wrap {
+    position: relative;
+    flex: 1;
+    display: flex;
+    align-items: center;
+  }
+  .search-icon {
+    position: absolute;
+    left: 10px;
+    font-size: 13px;
+    color: var(--text-muted);
+    pointer-events: none;
+  }
+  .search-input {
+    width: 100%;
+    padding: 7px 12px 7px 32px;
+    background: #1e293b;
+    border: 1px solid var(--panel-border);
+    color: var(--text-main);
+    border-radius: 6px;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .search-input:focus {
+    border-color: var(--accent);
+  }
+
+  .settings-body {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* Level 1: DVR Overview Cards Grid */
+  .dvr-overview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 14px;
+  }
+  .dvr-overview-card {
+    background: var(--panel-card);
+    border: 1px solid var(--panel-border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+  }
+  .dvr-overview-card:hover {
+    border-color: var(--accent);
+    background: rgba(30, 41, 59, 0.65);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+  }
+  .dvr-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .dvr-card-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .dvr-badge {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    background: rgba(59, 130, 246, 0.2);
+    color: var(--accent-hover);
+    padding: 2px 7px;
+    border-radius: 4px;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+  }
+  .dvr-card-info {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+  .dvr-card-preview {
+    font-size: 11px;
+    color: #cbd5e1;
+    background: rgba(15, 23, 42, 0.8);
+    padding: 6px 8px;
+    border-radius: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .dvr-card-action {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--accent-hover);
+    padding-top: 4px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  /* Level 2: Specific DVR Channel Editor */
+  .dvr-detail-view {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .dvr-detail-nav {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(15, 23, 42, 0.8);
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--panel-border);
+  }
+  .dvr-detail-nav-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .dvr-name-edit-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #0f172a;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--panel-border);
+  }
+  .dvr-name-edit-wrap label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+  .dvr-name-edit-input {
+    flex: 1;
+    background: #1e293b;
+    border: 1px solid var(--panel-border);
+    color: var(--text-main);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    outline: none;
+  }
+  .dvr-name-edit-input:focus {
+    border-color: var(--accent);
+  }
+
+  .dvr-channels-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 10px;
+  }
+  .dvr-channel-card {
+    background: rgba(15, 23, 42, 0.85);
+    border: 1px solid var(--panel-border);
+    border-radius: 8px;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: border-color 0.15s ease;
+  }
+  .dvr-channel-card:focus-within {
+    border-color: var(--accent);
+  }
+  .dvr-channel-badge {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent-hover);
+    min-width: 40px;
+  }
+  .dvr-channel-input {
+    flex: 1;
+    background: #1e293b;
+    border: 1px solid var(--panel-border);
+    color: var(--text-main);
+    padding: 6px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    outline: none;
+  }
+  .dvr-channel-input:focus {
+    border-color: var(--accent);
+  }
+
+  .settings-footer {
+    flex: 0 0 54px;
+    background: rgba(15, 23, 42, 0.95);
+    padding: 0 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid var(--panel-border);
+  }
+
+  /* 2. Quick Assign & Searchable Camera Picker */
+  .quick-assign-window {
+    background: #0f172a;
+    border: 1px solid var(--panel-border);
+    border-radius: 12px;
+    width: 600px;
+    max-width: 95vw;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.85);
+    overflow: hidden;
+  }
+  .picker-header {
+    flex: 0 0 50px;
+    background: rgba(30, 41, 59, 0.6);
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--panel-border);
+  }
+  .picker-search-bar {
+    padding: 10px 16px;
+    background: rgba(15, 23, 42, 0.9);
+    border-bottom: 1px solid var(--panel-border);
+  }
+  .picker-cam-list {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    padding: 12px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    max-height: 380px;
+  }
+  .picker-dvr-section {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .picker-dvr-header {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--accent-hover);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .picker-pills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 6px;
+  }
+  .cam-pill {
+    background: #1e293b;
+    border: 1px solid var(--panel-border);
+    border-radius: 6px;
+    padding: 6px 8px;
+    font-size: 11px;
+    color: var(--text-main);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .cam-pill:hover {
+    border-color: var(--accent);
+    background: rgba(59, 130, 246, 0.15);
+    transform: translateY(-1px);
+  }
+  .cam-pill.selected {
+    border-color: var(--accent) !important;
+    background: var(--accent) !important;
+    color: #fff !important;
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+  }
+  .cam-pill-ch {
+    font-size: 10px;
+    font-weight: 700;
+    opacity: 0.8;
+  }
+  .cam-pill-name {
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .picker-custom-name {
+    padding: 10px 16px;
+    background: rgba(15, 23, 42, 0.95);
+    border-top: 1px solid var(--panel-border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .picker-custom-name label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+  .picker-custom-name input {
+    flex: 1;
+    background: #1e293b;
+    border: 1px solid var(--panel-border);
+    color: var(--text-main);
+    padding: 6px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    outline: none;
+  }
+  .picker-custom-name input:focus {
+    border-color: var(--accent);
+  }
+
+  .picker-footer {
+    padding: 10px 16px;
+    background: rgba(15, 23, 42, 0.95);
+    border-top: 1px solid var(--panel-border);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+
+  /* Solo Fullscreen Modal */
+  #soloModal {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    z-index: 200;
+    display: none;
+    flex-direction: column;
+  }
+  #soloModal.active { display: flex; }
+  .solo-header {
+    flex: 0 0 46px;
+    background: rgba(14, 20, 32, 0.95);
+    display: flex;
+    align-items: center;
+    padding: 0 14px;
+    gap: 12px;
+    border-bottom: 1px solid var(--panel-border);
+  }
+  .solo-title { font-weight: 700; font-size: 14px; color: #fff; }
+  .solo-sub { font-size: 12px; color: var(--accent-hover); }
+  .solo-stage {
+    flex: 1 1 auto;
+    width: 100%;
+    height: calc(100% - 46px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+  }
+  .solo-stage video-stream, .solo-stage video {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    background: #000;
+  }
+
+  /* Toast Notification */
+  #toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(15, 23, 42, 0.95);
+    border: 1px solid var(--accent);
+    color: var(--text-main);
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6);
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.2s ease;
+    z-index: 300;
+  }
+  #toast.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <!-- Top Navigation Header -->
+  <header>
+    <div class="brand">
+      <span class="live-pulse"></span>
+      <span class="brand-text">CCTV 16-Camera Wall</span>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Slide Navigation (Pick any 16-cam group from 112 inventory) -->
+    <div class="slide-nav">
+      <button class="slide-btn" id="btnSlidePrev" title="Previous 16 Cameras (Left Arrow)">◀</button>
+      <select class="slide-select" id="slideSelect" title="Select 16-Camera Slide Group"></select>
+      <button class="slide-btn" id="btnSlideNext" title="Next 16 Cameras (Right Arrow)">▶</button>
+    </div>
+
+    <div class="drag-tip" title="Click and drag any camera window to swap its position">
+      <span>⠿</span>
+      <span>Draggable Grid</span>
+    </div>
+
+    <div class="spacer"></div>
+
+    <!-- Settings Button -->
+    <button class="btn-ctrl btn-primary" id="btnOpenSettings" title="Configure DVR and Camera Names">
+      ⚙ Settings
+    </button>
+
+    <!-- Layout Reset -->
+    <button class="btn-ctrl" id="btnResetLayout" title="Reset current slide's camera layout to default order">
+      ↺ Reset Layout
+    </button>
+
+    <div class="divider"></div>
+
+    <!-- Health Stats & Clock -->
+    <div class="stats-wrap">
+      <div class="stat-badge">
+        <span class="stat-dot live"></span>
+        <span>Live:</span>
+        <span class="stat-val" id="statLive">0</span>
+      </div>
+      <div class="stat-badge">
+        <span class="stat-dot down"></span>
+        <span>Down:</span>
+        <span class="stat-val" id="statDown">0</span>
+      </div>
+      <div class="stat-badge">
+        <span>Total:</span>
+        <span class="stat-val" id="statTotal">112</span>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <div id="clock">00:00:00</div>
+    <button class="btn-ctrl" id="btnFullscreen" title="Toggle Fullscreen (F11)">⛶ Fullscreen</button>
+  </header>
+
+  <!-- 16-Camera Viewport -->
+  <main id="viewport">
+    <div id="grid16Container"></div>
+  </main>
+</div>
+
+<!-- ==========================================================================
+     SETTINGS MODAL (Level 1: DVR List -> Level 2: DVR Channels)
+     ========================================================================== -->
+<div class="modal-backdrop" id="settingsModalBackdrop">
+  <div class="settings-modal-window">
+    <div class="settings-header">
+      <div class="settings-title">
+        <span id="settingsHeaderTitle">⚙ DVR & Camera Settings</span>
+      </div>
+      <div class="spacer"></div>
+      <button class="btn-ctrl" id="btnCloseSettings" style="padding:2px 8px;">✕</button>
+    </div>
+
+    <!-- Search / Filter in Settings -->
+    <div class="settings-search-bar">
+      <div class="search-input-wrap">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="settingsSearchInput" class="search-input" placeholder="Search DVR alias, camera name, or channel ID...">
+      </div>
+    </div>
+
+    <!-- Settings Body (Renders Level 1 DVR List or Level 2 DVR Channels) -->
+    <div class="settings-body" id="settingsContainer"></div>
+
+    <!-- Settings Footer -->
+    <div class="settings-footer">
+      <div style="display:flex; gap:8px;">
+        <button class="btn-ctrl" id="btnExportJson" title="Export all settings & layouts as JSON file">📥 Export JSON</button>
+        <button class="btn-ctrl" id="btnImportJson" title="Import settings from JSON file">📤 Import JSON</button>
+        <input type="file" id="fileImportJson" accept=".json" style="display:none;">
+        <button class="btn-ctrl" id="btnResetNames" style="color:var(--down-red);" title="Reset custom names to default">↺ Reset Names</button>
+      </div>
+      <div style="display:flex; gap:8px;">
+        <button class="btn-ctrl" id="btnCancelSettings">Cancel</button>
+        <button class="btn-ctrl btn-primary" id="btnSaveSettings">💾 Save Changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==========================================================================
+     QUICK TILE ASSIGN & SEARCHABLE CAMERA PICKER MODAL
+     ========================================================================== -->
+<div class="modal-backdrop" id="quickAssignBackdrop">
+  <div class="quick-assign-window">
+    <div class="picker-header">
+      <b id="quickAssignTitle" style="color:#fff; font-size:14px;">Assign Camera to Slot</b>
+      <button class="btn-ctrl" id="btnQuickAssignClose" style="padding:2px 7px;">✕</button>
+    </div>
+
+    <!-- Search in Camera Picker -->
+    <div class="picker-search-bar">
+      <div class="search-input-wrap">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="pickerSearchInput" class="search-input" placeholder="Filter cameras by name, channel, or DVR...">
+      </div>
+    </div>
+
+    <!-- Camera List (Grouped by DVR) -->
+    <div class="picker-cam-list" id="pickerCamList"></div>
+
+    <!-- Custom Display Name for Selected Camera -->
+    <div class="picker-custom-name">
+      <label>Display Name:</label>
+      <input type="text" id="pickerNameInput" placeholder="Custom name for selected camera">
+    </div>
+
+    <div class="picker-footer">
+      <button class="btn-ctrl" id="btnQuickAssignEmpty" style="margin-right:auto;">∅ Clear Slot</button>
+      <button class="btn-ctrl" id="btnQuickAssignCancel">Cancel</button>
+      <button class="btn-ctrl btn-primary" id="btnQuickAssignSave">Apply to Slot</button>
+    </div>
+  </div>
+</div>
+
+<!-- Solo Fullscreen Modal -->
+<div id="soloModal" role="dialog" aria-modal="true">
+  <div class="solo-header">
+    <button class="btn-ctrl" id="soloBack">← Back</button>
+    <span class="solo-title" id="soloTitle">Camera View</span>
+    <span class="solo-sub">Main Stream (Full Resolution HD)</span>
+    <div class="spacer"></div>
+    <button class="btn-ctrl" id="soloFs">⛶ Fullscreen</button>
+  </div>
+  <div class="solo-stage" id="soloStage"></div>
+</div>
+
+<!-- Toast Notification -->
+<div id="toast"></div>
+
+<script src="cameras.js"></script>
+<script>
+(function() {
+  // 1. Dynamic go2rtc host resolution
+  const params = new URLSearchParams(window.location.search);
+  const host = (window.location && window.location.hostname) ? window.location.hostname : '127.0.0.1';
+  const proto = (window.location && window.location.protocol === 'https:') ? 'https:' : 'http:';
+  const defaultGo2rtc = `${proto}//${host}:1984`;
+  const GO2RTC = (params.get('server') || window.GO2RTC || defaultGo2rtc).replace(/\/$/, '');
+  const CAMERAS = window.CAMERAS || [];
+  const WS_URL = GO2RTC.replace(/^http/, 'ws') + '/api/ws?src=';
+
+  // Camera lookup index
+  const camMap = {};
+  CAMERAS.forEach(c => { camMap[c.name] = c; });
+
+  // Extract unique DVR groups in order
+  const dvrGroups = [];
+  const dvrMap = {};
+  CAMERAS.forEach(c => {
+    const grp = c.group || 'Default';
+    if (!dvrMap[grp]) {
+      dvrMap[grp] = { group: grp, cams: [] };
+      dvrGroups.push(dvrMap[grp]);
+    }
+    dvrMap[grp].cams.push(c);
+  });
+
+  // 2. Persistent Storage (Layouts, Custom Camera Names, DVR Aliases)
+  const STORAGE_KEY = 'video_wall_16_layout_v2';
+  let currentSlideIdx = 0;
+  const totalSlides = Math.max(1, Math.ceil(CAMERAS.length / 16));
+
+  function getDefaultSlideCams(slideIndex) {
+    const start = slideIndex * 16;
+    const slice = CAMERAS.slice(start, start + 16).map(c => c.name);
+    while (slice.length < 16 && CAMERAS.length > 0) {
+      slice.push('');
+    }
+    return slice;
+  }
+
+  function loadLayoutConfig() {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed && typeof parsed === 'object') {
+          return parsed;
+        }
+      }
+    } catch (e) {
+      console.warn('Failed to load layout config:', e);
+    }
+    return { slides: {}, customNames: {}, dvrAliases: {} };
+  }
+
+  let layoutConfig = loadLayoutConfig();
+  if (!layoutConfig.slides) layoutConfig.slides = {};
+  if (!layoutConfig.customNames) layoutConfig.customNames = {};
+  if (!layoutConfig.dvrAliases) layoutConfig.dvrAliases = {};
+
+  function saveLayoutConfig() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(layoutConfig));
+    } catch (e) {
+      console.error('Failed to save layout config:', e);
+    }
+  }
+
+  function getCurrentSlideCams() {
+    if (!layoutConfig.slides[currentSlideIdx] || !Array.isArray(layoutConfig.slides[currentSlideIdx])) {
+      layoutConfig.slides[currentSlideIdx] = getDefaultSlideCams(currentSlideIdx);
+    }
+    return layoutConfig.slides[currentSlideIdx];
+  }
+
+  function getCameraLabel(camId) {
+    if (!camId) return 'Empty Slot';
+    if (layoutConfig.customNames && layoutConfig.customNames[camId]) {
+      return layoutConfig.customNames[camId];
+    }
+    const cam = camMap[camId];
+    return cam ? (cam.label || cam.name) : camId;
+  }
+
+  function getCameraGroup(camId) {
+    if (!camId) return '';
+    const cam = camMap[camId];
+    const originalGroup = cam ? (cam.group || '') : '';
+    if (layoutConfig.dvrAliases && layoutConfig.dvrAliases[originalGroup]) {
+      return layoutConfig.dvrAliases[originalGroup];
+    }
+    return originalGroup;
+  }
+
+  function getDvrTitle(originalGroup) {
+    if (layoutConfig.dvrAliases && layoutConfig.dvrAliases[originalGroup]) {
+      return layoutConfig.dvrAliases[originalGroup];
+    }
+    return originalGroup;
+  }
+
+  // Active streaming elements tracker
+  let activeStreams = [];
+  let soloActiveStream = null;
+
+  // Load go2rtc webcomponent
+  const sc = document.createElement('script');
+  sc.src = 'webcomponent.js';
+  sc.onload = initApp;
+  sc.onerror = () => alert('Failed to load webcomponent.js');
+  document.head.appendChild(sc);
+
+  function makeStream(srcName, mode = 'mse,webrtc') {
+    const el = document.createElement('video-stream');
+    el.mode = mode;
+    el.background = true;
+    el._wsSrc = WS_URL + encodeURIComponent(srcName);
+    return el;
+  }
+  function startStream(el) {
+    if (el && el._wsSrc) el.src = el._wsSrc;
+  }
+  function stopStream(el) {
+    if (el) {
+      if (typeof el.ondisconnect === 'function') {
+        try { el.ondisconnect(); } catch (e) {}
+      }
+      el.src = '';
+    }
+  }
+
+  function showToast(msg) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toast._timer);
+    toast._timer = setTimeout(() => toast.classList.remove('show'), 2400);
+  }
+
+  // 3. Application Initialization
+  function initApp() {
+    document.getElementById('statTotal').textContent = CAMERAS.length;
+
+    // Populate Slide Selector
+    const slideSelect = document.getElementById('slideSelect');
+    slideSelect.innerHTML = '';
+    for (let i = 0; i < totalSlides; i++) {
+      const opt = document.createElement('option');
+      opt.value = i;
+      const startCam = i * 16 + 1;
+      const endCam = Math.min((i + 1) * 16, CAMERAS.length);
+      opt.textContent = `Slide ${i + 1} (${startCam}–${endCam})`;
+      slideSelect.appendChild(opt);
+    }
+    slideSelect.value = currentSlideIdx;
+
+    setupEvents();
+    render16Grid();
+
+    // Start status polling and clock
+    setInterval(pollHealth, 2500);
+    setInterval(() => {
+      document.getElementById('clock').textContent = new Date().toLocaleTimeString();
+    }, 1000);
+  }
+
+  // 4. Render 16-Camera Draggable Grid
+  let draggedSlotIdx = null;
+
+  function render16Grid() {
+    activeStreams.forEach(t => stopStream(t.el));
+    activeStreams = [];
+
+    const container = document.getElementById('grid16Container');
+    container.innerHTML = '';
+
+    const slideCams = getCurrentSlideCams();
+
+    for (let slotIdx = 0; slotIdx < 16; slotIdx++) {
+      const camId = slideCams[slotIdx] || '';
+      const cam = camMap[camId] || (camId ? { name: camId, solo: camId, tile: camId + '_sub' } : null);
+
+      const tile = document.createElement('div');
+      tile.className = 'tile';
+      tile.setAttribute('draggable', 'true');
+      tile.dataset.slotIdx = slotIdx;
+      tile.style.order = slotIdx;
+
+      // Slot Grip Badge
+      const grip = document.createElement('div');
+      grip.className = 'tile-grip';
+      grip.title = `Slot #${slotIdx + 1} (Drag to swap position)`;
+      grip.innerHTML = `
+        <svg viewBox="0 0 24 24"><path d="M9 3h2v2H9V3zm4 0h2v2h-2V3zM9 7h2v2H9V7zm4 0h2v2h-2V7zM9 11h2v2H9v-2zm4 0h2v2h-2v-2zM9 15h2v2H9v-2zm4 0h2v2h-2v-2zM9 19h2v2H9v-2zm4 0h2v2h-2v-2z"/></svg>
+        <span>#${slotIdx + 1}</span>
+      `;
+      tile.appendChild(grip);
+
+      let streamEl = null;
+      let dotEl = null;
+
+      if (cam) {
+        const streamSrc = cam.tile || (cam.name + '_sub');
+        streamEl = makeStream(streamSrc, 'mse,webrtc');
+        tile.appendChild(streamEl);
+
+        const osd = document.createElement('div');
+        osd.className = 'tile-osd';
+        const labelText = getCameraLabel(cam.name);
+        const groupText = getCameraGroup(cam.name);
+
+        osd.innerHTML = `
+          <span class="tile-dot"></span>
+          <span class="tile-name" title="${escapeHtml(labelText)}">${escapeHtml(labelText)}</span>
+          <span class="tile-group" title="${escapeHtml(groupText)}">${escapeHtml(groupText)}</span>
+          <div class="tile-btn-group">
+            <button class="tile-act-btn btn-assign" title="Assign Camera / Rename">⚙</button>
+            <button class="tile-act-btn btn-expand" title="Solo HD View">⤢</button>
+          </div>
+        `;
+        tile.appendChild(osd);
+
+        dotEl = osd.querySelector('.tile-dot');
+        const btnAssign = osd.querySelector('.btn-assign');
+        const btnExpand = osd.querySelector('.btn-expand');
+
+        btnAssign.addEventListener('click', (e) => {
+          e.stopPropagation();
+          openQuickAssign(parseInt(tile.dataset.slotIdx, 10));
+        });
+        btnExpand.addEventListener('click', (e) => {
+          e.stopPropagation();
+          openSolo(cam);
+        });
+
+        startStream(streamEl);
+        activeStreams.push({ cam, el: streamEl, dot: dotEl, tile });
+      } else {
+        const emptyOsd = document.createElement('div');
+        emptyOsd.className = 'tile-osd';
+        emptyOsd.innerHTML = `
+          <span class="tile-name" style="color:var(--text-muted); font-style:italic;">Empty Slot</span>
+          <div class="tile-btn-group">
+            <button class="tile-act-btn btn-assign" style="opacity:1;" title="Assign Camera">⚙ Assign</button>
+          </div>
+        `;
+        tile.appendChild(emptyOsd);
+        emptyOsd.querySelector('.btn-assign').addEventListener('click', (e) => {
+          e.stopPropagation();
+          openQuickAssign(parseInt(tile.dataset.slotIdx, 10));
+        });
+      }
+
+      tile.addEventListener('click', () => {
+        const currentSlot = parseInt(tile.dataset.slotIdx, 10);
+        const currentCamId = getCurrentSlideCams()[currentSlot];
+        const activeCam = camMap[currentCamId] || (currentCamId ? { name: currentCamId, solo: currentCamId, tile: currentCamId + '_sub' } : null);
+        if (activeCam) openSolo(activeCam);
+      });
+
+      setupTileDragAndDrop(tile);
+      container.appendChild(tile);
+    }
+  }
+
+  // 5. Drag and Drop Swap Logic (NO full grid reload — 100% smooth!)
+  function setupTileDragAndDrop(tile) {
+    tile.addEventListener('dragstart', (e) => {
+      draggedSlotIdx = parseInt(tile.dataset.slotIdx, 10);
+      tile.classList.add('is-dragging');
+      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData('text/plain', draggedSlotIdx.toString());
+    });
+
+    tile.addEventListener('dragend', () => {
+      draggedSlotIdx = null;
+      document.querySelectorAll('.tile').forEach(t => {
+        t.classList.remove('is-dragging', 'drag-over');
+      });
+    });
+
+    tile.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+    });
+
+    tile.addEventListener('dragenter', (e) => {
+      e.preventDefault();
+      const currentTileSlot = parseInt(tile.dataset.slotIdx, 10);
+      if (draggedSlotIdx !== null && draggedSlotIdx !== currentTileSlot) {
+        tile.classList.add('drag-over');
+      }
+    });
+
+    tile.addEventListener('dragleave', (e) => {
+      if (!tile.contains(e.relatedTarget)) {
+        tile.classList.remove('drag-over');
+      }
+    });
+
+    tile.addEventListener('drop', (e) => {
+      e.preventDefault();
+      tile.classList.remove('drag-over');
+      const sourceIdx = parseInt(e.dataTransfer.getData('text/plain'), 10);
+      const targetIdx = parseInt(tile.dataset.slotIdx, 10);
+
+      if (!isNaN(sourceIdx) && !isNaN(targetIdx) && sourceIdx !== targetIdx) {
+        swapSlotPositions(sourceIdx, targetIdx);
+      }
+    });
+  }
+
+  function updateTileSlotDisplay(tile, newSlotIdx) {
+    tile.dataset.slotIdx = newSlotIdx;
+    tile.style.order = newSlotIdx;
+    const gripSpan = tile.querySelector('.tile-grip span');
+    if (gripSpan) gripSpan.textContent = `#${newSlotIdx + 1}`;
+    const grip = tile.querySelector('.tile-grip');
+    if (grip) grip.title = `Slot #${newSlotIdx + 1} (Drag to swap position)`;
+  }
+
+  function swapSlotPositions(fromSlotIdx, toSlotIdx) {
+    if (fromSlotIdx === toSlotIdx) return;
+    const slideCams = getCurrentSlideCams();
+    if (fromSlotIdx >= 0 && fromSlotIdx < 16 && toSlotIdx >= 0 && toSlotIdx < 16) {
+      const tileA = document.querySelector(`.tile[data-slot-idx="${fromSlotIdx}"]`);
+      const tileB = document.querySelector(`.tile[data-slot-idx="${toSlotIdx}"]`);
+
+      if (tileA && tileB) {
+        // Smoothly swap CSS grid order and slot badges without recreating DOM or reloading video
+        updateTileSlotDisplay(tileA, toSlotIdx);
+        updateTileSlotDisplay(tileB, fromSlotIdx);
+
+        // Update in-memory and persistent slide configuration
+        const temp = slideCams[fromSlotIdx];
+        slideCams[fromSlotIdx] = slideCams[toSlotIdx];
+        slideCams[toSlotIdx] = temp;
+
+        layoutConfig.slides[currentSlideIdx] = slideCams;
+        saveLayoutConfig();
+
+        showToast(`Swapped Slot #${fromSlotIdx + 1} ⇄ Slot #${toSlotIdx + 1}`);
+      }
+    }
+  }
+
+  // ==========================================================================
+  // 6. QUICK ASSIGN & SEARCHABLE CAMERA PICKER (Grouped by DVR)
+  // ==========================================================================
+  let currentAssignSlot = null;
+  let pickerSelectedCamId = null;
+  const quickAssignBackdrop = document.getElementById('quickAssignBackdrop');
+  const pickerSearchInput = document.getElementById('pickerSearchInput');
+  const pickerCamList = document.getElementById('pickerCamList');
+  const pickerNameInput = document.getElementById('pickerNameInput');
+
+  function openQuickAssign(slotIdx) {
+    currentAssignSlot = slotIdx;
+    const slideCams = getCurrentSlideCams();
+    pickerSelectedCamId = slideCams[slotIdx] || '';
+
+    document.getElementById('quickAssignTitle').textContent = `Assign Camera to Slot #${slotIdx + 1}`;
+    pickerSearchInput.value = '';
+    pickerNameInput.value = pickerSelectedCamId ? getCameraLabel(pickerSelectedCamId) : '';
+
+    renderPickerCamList('');
+    quickAssignBackdrop.classList.add('active');
+    setTimeout(() => pickerSearchInput.focus(), 50);
+  }
+
+  function closeQuickAssign() {
+    quickAssignBackdrop.classList.remove('active');
+    currentAssignSlot = null;
+    pickerSelectedCamId = null;
+  }
+
+  function renderPickerCamList(filterText = '') {
+    pickerCamList.innerHTML = '';
+    const q = filterText.toLowerCase().trim();
+
+    let matchesFound = false;
+
+    dvrGroups.forEach(dvr => {
+      const dvrTitle = getDvrTitle(dvr.group);
+      const matchingCams = dvr.cams.filter(c => {
+        if (!q) return true;
+        const name = getCameraLabel(c.name).toLowerCase();
+        const cid = c.name.toLowerCase();
+        const grp = dvrTitle.toLowerCase();
+        return name.includes(q) || cid.includes(q) || grp.includes(q);
+      });
+
+      if (matchingCams.length > 0) {
+        matchesFound = true;
+        const section = document.createElement('div');
+        section.className = 'picker-dvr-section';
+
+        const header = document.createElement('div');
+        header.className = 'picker-dvr-header';
+        header.innerHTML = `<span>📹 ${escapeHtml(dvrTitle)}</span> <span style="font-size:10px; color:var(--text-muted);">(${matchingCams.length} cams)</span>`;
+        section.appendChild(header);
+
+        const pillsGrid = document.createElement('div');
+        pillsGrid.className = 'picker-pills-grid';
+
+        matchingCams.forEach(c => {
+          const pill = document.createElement('div');
+          pill.className = 'cam-pill' + (c.name === pickerSelectedCamId ? ' selected' : '');
+          const label = getCameraLabel(c.name);
+          const chMatch = c.name.match(/ch(\d+)/i);
+          const chLabel = chMatch ? `Ch ${chMatch[1]}` : c.name;
+
+          pill.innerHTML = `
+            <div class="cam-pill-ch">${escapeHtml(chLabel)}</div>
+            <div class="cam-pill-name" title="${escapeHtml(label)}">${escapeHtml(label)}</div>
+          `;
+
+          pill.addEventListener('click', () => {
+            pickerSelectedCamId = c.name;
+            pickerNameInput.value = label;
+            document.querySelectorAll('.cam-pill').forEach(p => p.classList.remove('selected'));
+            pill.classList.add('selected');
+          });
+
+          pillsGrid.appendChild(pill);
+        });
+
+        section.appendChild(pillsGrid);
+        pickerCamList.appendChild(section);
+      }
+    });
+
+    if (!matchesFound) {
+      pickerCamList.innerHTML = `<div style="text-align:center; color:var(--text-muted); padding:30px 10px; font-size:13px;">No cameras match "${escapeHtml(filterText)}"</div>`;
+    }
+  }
+
+  pickerSearchInput.addEventListener('input', (e) => {
+    renderPickerCamList(e.target.value);
+  });
+
+  document.getElementById('btnQuickAssignEmpty').addEventListener('click', () => {
+    pickerSelectedCamId = '';
+    pickerNameInput.value = '';
+    applyQuickAssign();
+  });
+
+  function updateSingleTile(slotIdx) {
+    const tile = document.querySelector(`.tile[data-slot-idx="${slotIdx}"]`);
+    if (!tile) return;
+
+    const slideCams = getCurrentSlideCams();
+    const camId = slideCams[slotIdx] || '';
+    const cam = camMap[camId] || (camId ? { name: camId, solo: camId, tile: camId + '_sub' } : null);
+
+    // Stop and remove old stream if any
+    const oldStream = tile.querySelector('video-stream');
+    if (oldStream) {
+      stopStream(oldStream);
+      oldStream.remove();
+    }
+    const oldOsd = tile.querySelector('.tile-osd');
+    if (oldOsd) oldOsd.remove();
+
+    activeStreams = activeStreams.filter(item => item.tile !== tile);
+
+    if (cam) {
+      const streamSrc = cam.tile || (cam.name + '_sub');
+      const streamEl = makeStream(streamSrc, 'mse,webrtc');
+      tile.appendChild(streamEl);
+
+      const osd = document.createElement('div');
+      osd.className = 'tile-osd';
+      const labelText = getCameraLabel(cam.name);
+      const groupText = getCameraGroup(cam.name);
+
+      osd.innerHTML = `
+        <span class="tile-dot"></span>
+        <span class="tile-name" title="${escapeHtml(labelText)}">${escapeHtml(labelText)}</span>
+        <span class="tile-group" title="${escapeHtml(groupText)}">${escapeHtml(groupText)}</span>
+        <div class="tile-btn-group">
+          <button class="tile-act-btn btn-assign" title="Assign Camera / Rename">⚙</button>
+          <button class="tile-act-btn btn-expand" title="Solo HD View">⤢</button>
+        </div>
+      `;
+      tile.appendChild(osd);
+
+      const dotEl = osd.querySelector('.tile-dot');
+      osd.querySelector('.btn-assign').addEventListener('click', (e) => {
+        e.stopPropagation();
+        openQuickAssign(parseInt(tile.dataset.slotIdx, 10));
+      });
+      osd.querySelector('.btn-expand').addEventListener('click', (e) => {
+        e.stopPropagation();
+        openSolo(cam);
+      });
+
+      startStream(streamEl);
+      activeStreams.push({ cam, el: streamEl, dot: dotEl, tile });
+    } else {
+      const emptyOsd = document.createElement('div');
+      emptyOsd.className = 'tile-osd';
+      emptyOsd.innerHTML = `
+        <span class="tile-name" style="color:var(--text-muted); font-style:italic;">Empty Slot</span>
+        <div class="tile-btn-group">
+          <button class="tile-act-btn btn-assign" style="opacity:1;" title="Assign Camera">⚙ Assign</button>
+        </div>
+      `;
+      tile.appendChild(emptyOsd);
+      emptyOsd.querySelector('.btn-assign').addEventListener('click', (e) => {
+        e.stopPropagation();
+        openQuickAssign(parseInt(tile.dataset.slotIdx, 10));
+      });
+    }
+  }
+
+  function applyQuickAssign() {
+    if (currentAssignSlot === null) return;
+    const selectedCamId = pickerSelectedCamId || '';
+    const customName = pickerNameInput.value.trim();
+
+    const slideCams = getCurrentSlideCams();
+    slideCams[currentAssignSlot] = selectedCamId;
+    layoutConfig.slides[currentSlideIdx] = slideCams;
+
+    if (!layoutConfig.customNames) layoutConfig.customNames = {};
+    if (selectedCamId) {
+      if (customName && customName !== (camMap[selectedCamId]?.label || selectedCamId)) {
+        layoutConfig.customNames[selectedCamId] = customName;
+      }
+    }
+
+    saveLayoutConfig();
+    const updatedSlot = currentAssignSlot;
+    closeQuickAssign();
+    updateSingleTile(updatedSlot);
+    showToast(`Slot #${updatedSlot + 1} updated`);
+  }
+
+  // ==========================================================================
+  // 7. CLEAN 2-LEVEL SETTINGS MANAGER (DVR List -> Click DVR for Channels)
+  // ==========================================================================
+  const settingsModalBackdrop = document.getElementById('settingsModalBackdrop');
+  const settingsSearchInput = document.getElementById('settingsSearchInput');
+  const settingsContainer = document.getElementById('settingsContainer');
+  let selectedDvrIndex = null;
+
+  function openSettingsModal() {
+    selectedDvrIndex = null;
+    settingsSearchInput.value = '';
+    renderSettingsView();
+    settingsModalBackdrop.classList.add('active');
+    setTimeout(() => settingsSearchInput.focus(), 50);
+  }
+
+  function closeSettingsModal() {
+    settingsModalBackdrop.classList.remove('active');
+  }
+
+  function renderSettingsView() {
+    const q = settingsSearchInput.value.toLowerCase().trim();
+    if (selectedDvrIndex === null) {
+      renderDvrOverviewList(q);
+    } else {
+      renderDvrChannelEditor(selectedDvrIndex, q);
+    }
+  }
+
+  // Level 1: Clean DVR Overview Cards
+  function renderDvrOverviewList(filterText = '') {
+    document.getElementById('settingsHeaderTitle').textContent = '⚙ Settings: Select a DVR to Manage';
+    settingsContainer.innerHTML = '';
+
+    const overviewGrid = document.createElement('div');
+    overviewGrid.className = 'dvr-overview-grid';
+
+    let matchCount = 0;
+
+    dvrGroups.forEach((dvr, idx) => {
+      const origGroup = dvr.group;
+      const currentAlias = getDvrTitle(origGroup);
+
+      const matchingCams = dvr.cams.filter(c => {
+        if (!filterText) return true;
+        const cName = getCameraLabel(c.name).toLowerCase();
+        const cid = c.name.toLowerCase();
+        const dName = currentAlias.toLowerCase();
+        return cName.includes(filterText) || cid.includes(filterText) || dName.includes(filterText);
+      });
+
+      if (matchingCams.length > 0) {
+        matchCount++;
+        const card = document.createElement('div');
+        card.className = 'dvr-overview-card';
+
+        const previewNames = dvr.cams.slice(0, 4).map(c => getCameraLabel(c.name)).filter(Boolean).join(', ') || 'Ch 1 – 16';
+
+        card.innerHTML = `
+          <div class="dvr-card-top">
+            <div class="dvr-card-title">📹 ${escapeHtml(currentAlias)}</div>
+            <span class="dvr-badge">${dvr.cams.length} Cams</span>
+          </div>
+          <div class="dvr-card-info">Original Group: <b>${escapeHtml(origGroup)}</b></div>
+          <div class="dvr-card-preview" title="${escapeHtml(previewNames)}">${escapeHtml(previewNames)}...</div>
+          <div class="dvr-card-action">
+            <span>Configure 16 Channels</span>
+            <span>→</span>
+          </div>
+        `;
+
+        card.addEventListener('click', () => {
+          selectedDvrIndex = idx;
+          settingsSearchInput.value = '';
+          renderSettingsView();
+        });
+
+        overviewGrid.appendChild(card);
+      }
+    });
+
+    if (matchCount === 0) {
+      settingsContainer.innerHTML = `<div style="text-align:center; color:var(--text-muted); padding:40px 10px; font-size:14px;">No DVRs or cameras match "${escapeHtml(filterText)}"</div>`;
+    } else {
+      settingsContainer.appendChild(overviewGrid);
+    }
+  }
+
+  // Level 2: Clean Channel Editor for Selected DVR
+  function renderDvrChannelEditor(dvrIdx, filterText = '') {
+    const dvr = dvrGroups[dvrIdx];
+    if (!dvr) {
+      selectedDvrIndex = null;
+      renderSettingsView();
+      return;
+    }
+
+    const origGroup = dvr.group;
+    const currentAlias = getDvrTitle(origGroup);
+
+    document.getElementById('settingsHeaderTitle').textContent = `⚙ Settings: ${currentAlias}`;
+    settingsContainer.innerHTML = '';
+
+    const detailWrap = document.createElement('div');
+    detailWrap.className = 'dvr-detail-view';
+
+    // Top Navigation (Back button + DVR Title + Prev/Next DVR)
+    const navBar = document.createElement('div');
+    navBar.className = 'dvr-detail-nav';
+    navBar.innerHTML = `
+      <button class="btn-ctrl" id="btnSettingsBack" style="font-weight:700;">← Back to DVRs</button>
+      <div class="dvr-detail-nav-title">
+        <span>📹 ${escapeHtml(currentAlias)}</span>
+        <span class="dvr-badge">${dvr.cams.length} Channels</span>
+      </div>
+      <div style="display:flex; gap:6px;">
+        <button class="btn-ctrl" id="btnSettingsPrevDvr" title="Previous DVR" ${dvrIdx === 0 ? 'disabled style="opacity:0.4;"' : ''}>◀ Prev DVR</button>
+        <button class="btn-ctrl" id="btnSettingsNextDvr" title="Next DVR" ${dvrIdx === dvrGroups.length - 1 ? 'disabled style="opacity:0.4;"' : ''}>Next DVR ▶</button>
+      </div>
+    `;
+    detailWrap.appendChild(navBar);
+
+    // Editable DVR Name / Alias Box
+    const dvrNameBox = document.createElement('div');
+    dvrNameBox.className = 'dvr-name-edit-wrap';
+    dvrNameBox.innerHTML = `
+      <label>DVR NAME / ALIAS:</label>
+      <input type="text" class="dvr-name-edit-input" id="activeDvrAliasInput" data-orig-group="${escapeHtml(origGroup)}" value="${escapeHtml(currentAlias)}" placeholder="e.g. Warehouse DVR, Gate DVR">
+    `;
+    detailWrap.appendChild(dvrNameBox);
+
+    // 16 Channels Grid
+    const channelsGrid = document.createElement('div');
+    channelsGrid.className = 'dvr-channels-grid';
+
+    const matchingCams = dvr.cams.filter(c => {
+      if (!filterText) return true;
+      const cName = getCameraLabel(c.name).toLowerCase();
+      const cid = c.name.toLowerCase();
+      return cName.includes(filterText) || cid.includes(filterText);
+    });
+
+    matchingCams.forEach(c => {
+      const card = document.createElement('div');
+      card.className = 'dvr-channel-card';
+      const chMatch = c.name.match(/ch(\d+)/i);
+      const chLabel = chMatch ? `Ch ${chMatch[1]}` : c.name;
+      const currentCamName = getCameraLabel(c.name);
+
+      card.innerHTML = `
+        <span class="dvr-channel-badge">${escapeHtml(chLabel)}</span>
+        <input type="text" class="dvr-channel-input" data-cam-id="${escapeHtml(c.name)}" value="${escapeHtml(currentCamName)}" placeholder="Camera Name">
+      `;
+      channelsGrid.appendChild(card);
+    });
+
+    detailWrap.appendChild(channelsGrid);
+    settingsContainer.appendChild(detailWrap);
+
+    document.getElementById('btnSettingsBack').addEventListener('click', () => {
+      syncCurrentDvrInputsInMemory();
+      selectedDvrIndex = null;
+      settingsSearchInput.value = '';
+      renderSettingsView();
+    });
+
+    const prevBtn = document.getElementById('btnSettingsPrevDvr');
+    if (prevBtn && dvrIdx > 0) {
+      prevBtn.addEventListener('click', () => {
+        syncCurrentDvrInputsInMemory();
+        selectedDvrIndex = dvrIdx - 1;
+        settingsSearchInput.value = '';
+        renderSettingsView();
+      });
+    }
+
+    const nextBtn = document.getElementById('btnSettingsNextDvr');
+    if (nextBtn && dvrIdx < dvrGroups.length - 1) {
+      nextBtn.addEventListener('click', () => {
+        syncCurrentDvrInputsInMemory();
+        selectedDvrIndex = dvrIdx + 1;
+        settingsSearchInput.value = '';
+        renderSettingsView();
+      });
+    }
+  }
+
+  function syncCurrentDvrInputsInMemory() {
+    const aliasInput = document.getElementById('activeDvrAliasInput');
+    if (aliasInput) {
+      const orig = aliasInput.dataset.origGroup;
+      const alias = aliasInput.value.trim();
+      if (orig) {
+        if (!layoutConfig.dvrAliases) layoutConfig.dvrAliases = {};
+        if (alias && alias !== orig) {
+          layoutConfig.dvrAliases[orig] = alias;
+        } else {
+          delete layoutConfig.dvrAliases[orig];
+        }
+      }
+    }
+
+    if (!layoutConfig.customNames) layoutConfig.customNames = {};
+    document.querySelectorAll('.dvr-channel-input').forEach(input => {
+      const camId = input.dataset.camId;
+      const val = input.value.trim();
+      if (camId) {
+        const origLabel = camMap[camId]?.label || camId;
+        if (val && val !== origLabel) {
+          layoutConfig.customNames[camId] = val;
+        } else {
+          delete layoutConfig.customNames[camId];
+        }
+      }
+    });
+  }
+
+  settingsSearchInput.addEventListener('input', () => {
+    renderSettingsView();
+  });
+
+  function updateAllTileLabels() {
+    const slideCams = getCurrentSlideCams();
+    for (let slotIdx = 0; slotIdx < 16; slotIdx++) {
+      const tile = document.querySelector(`.tile[data-slot-idx="${slotIdx}"]`);
+      if (!tile) continue;
+      const camId = slideCams[slotIdx];
+      if (camId) {
+        const nameEl = tile.querySelector('.tile-name');
+        const grpEl = tile.querySelector('.tile-group');
+        const labelText = getCameraLabel(camId);
+        const groupText = getCameraGroup(camId);
+        if (nameEl) {
+          nameEl.textContent = labelText;
+          nameEl.title = labelText;
+        }
+        if (grpEl) {
+          grpEl.textContent = groupText;
+          grpEl.title = groupText;
+        }
+      }
+    }
+  }
+
+  function saveSettingsChanges() {
+    syncCurrentDvrInputsInMemory();
+    saveLayoutConfig();
+    closeSettingsModal();
+    updateAllTileLabels();
+    showToast('DVR & Camera settings saved successfully!');
+  }
+
+  // Settings Export / Import / Reset
+  document.getElementById('btnExportJson').addEventListener('click', () => {
+    syncCurrentDvrInputsInMemory();
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(layoutConfig, null, 2));
+    const a = document.createElement('a');
+    a.setAttribute("href", dataStr);
+    a.setAttribute("download", "cctv_wall_settings.json");
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  });
+
+  document.getElementById('btnImportJson').addEventListener('click', () => {
+    document.getElementById('fileImportJson').click();
+  });
+  document.getElementById('fileImportJson').addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      try {
+        const imported = JSON.parse(event.target.result);
+        if (imported && typeof imported === 'object') {
+          layoutConfig = imported;
+          if (!layoutConfig.slides) layoutConfig.slides = {};
+          if (!layoutConfig.customNames) layoutConfig.customNames = {};
+          if (!layoutConfig.dvrAliases) layoutConfig.dvrAliases = {};
+          saveLayoutConfig();
+          renderSettingsView();
+          render16Grid();
+          showToast('Settings imported successfully!');
+        } else {
+          alert('Invalid JSON file format.');
+        }
+      } catch (err) {
+        alert('Error parsing JSON file: ' + err.message);
+      }
+    };
+    reader.readAsText(file);
+  });
+
+  document.getElementById('btnResetNames').addEventListener('click', () => {
+    if (confirm('Reset all custom DVR names and camera names back to initial defaults?')) {
+      layoutConfig.customNames = {};
+      layoutConfig.dvrAliases = {};
+      saveLayoutConfig();
+      renderSettingsView();
+      updateAllTileLabels();
+      showToast('Names reset to initial defaults');
+    }
+  });
+
+  // ==========================================================================
+  // 8. SOLO HD VIEW MODAL
+  // ==========================================================================
+  const soloModal = document.getElementById('soloModal');
+  const soloStage = document.getElementById('soloStage');
+  const soloTitle = document.getElementById('soloTitle');
+
+  function openSolo(cam) {
+    stopSolo();
+    const soloSrc = cam.solo || cam.name;
+    soloTitle.textContent = `${getCameraLabel(cam.name)} (${getCameraGroup(cam.name)})`;
+
+    soloActiveStream = makeStream(soloSrc, 'webrtc,mse');
+    soloStage.appendChild(soloActiveStream);
+    startStream(soloActiveStream);
+
+    soloModal.classList.add('active');
+  }
+
+  function closeSolo() {
+    soloModal.classList.remove('active');
+    stopSolo();
+  }
+
+  function stopSolo() {
+    if (soloActiveStream) {
+      stopStream(soloActiveStream);
+      soloActiveStream.remove();
+      soloActiveStream = null;
+    }
+  }
+
+  // ==========================================================================
+  // 9. HEALTH STATUS POLLING
+  // ==========================================================================
+  async function pollHealth() {
+    try {
+      const res = await fetch(`${GO2RTC}/api/streams`, { cache: 'no-store' });
+      if (!res.ok) throw new Error('Network error');
+      const data = await res.json();
+
+      let liveCount = 0;
+      let downCount = 0;
+
+      activeStreams.forEach(item => {
+        const streamKey = item.cam.tile || (item.cam.name + '_sub');
+        const st = data[streamKey];
+        const isLive = !!(st && st.producers && st.producers.length > 0);
+
+        if (item.dot) {
+          item.dot.classList.toggle('live', isLive);
+          item.dot.classList.toggle('down', !isLive);
+        }
+
+        if (isLive) liveCount++;
+        else downCount++;
+      });
+
+      document.getElementById('statLive').textContent = liveCount;
+      document.getElementById('statDown').textContent = downCount;
+    } catch (e) {
+      document.getElementById('statLive').textContent = '0';
+      document.getElementById('statDown').textContent = activeStreams.length;
+      activeStreams.forEach(item => {
+        if (item.dot) {
+          item.dot.classList.remove('live');
+          item.dot.classList.add('down');
+        }
+      });
+    }
+  }
+
+  // ==========================================================================
+  // 10. EVENT LISTENERS SETUP
+  // ==========================================================================
+  function setupEvents() {
+    // Slide Navigation
+    const slideSelect = document.getElementById('slideSelect');
+    slideSelect.addEventListener('change', (e) => {
+      currentSlideIdx = parseInt(e.target.value, 10) || 0;
+      render16Grid();
+    });
+
+    document.getElementById('btnSlidePrev').addEventListener('click', () => {
+      currentSlideIdx = (currentSlideIdx - 1 + totalSlides) % totalSlides;
+      slideSelect.value = currentSlideIdx;
+      render16Grid();
+    });
+
+    document.getElementById('btnSlideNext').addEventListener('click', () => {
+      currentSlideIdx = (currentSlideIdx + 1) % totalSlides;
+      slideSelect.value = currentSlideIdx;
+      render16Grid();
+    });
+
+    // Reset Layout
+    document.getElementById('btnResetLayout').addEventListener('click', () => {
+      if (confirm(`Reset Slide ${currentSlideIdx + 1} layout to default order?`)) {
+        layoutConfig.slides[currentSlideIdx] = getDefaultSlideCams(currentSlideIdx);
+        saveLayoutConfig();
+        render16Grid();
+        showToast('Layout reset to default');
+      }
+    });
+
+    // Settings Modal Events
+    document.getElementById('btnOpenSettings').addEventListener('click', openSettingsModal);
+    document.getElementById('btnCloseSettings').addEventListener('click', closeSettingsModal);
+    document.getElementById('btnCancelSettings').addEventListener('click', closeSettingsModal);
+    document.getElementById('btnSaveSettings').addEventListener('click', saveSettingsChanges);
+
+    // Quick Assign Modal Events
+    document.getElementById('btnQuickAssignClose').addEventListener('click', closeQuickAssign);
+    document.getElementById('btnQuickAssignCancel').addEventListener('click', closeQuickAssign);
+    document.getElementById('btnQuickAssignSave').addEventListener('click', applyQuickAssign);
+
+    // Solo Modal Events
+    document.getElementById('soloBack').addEventListener('click', closeSolo);
+    document.getElementById('soloFs').addEventListener('click', () => {
+      (soloModal.requestFullscreen ? soloModal : document.documentElement).requestFullscreen?.();
+    });
+
+    // Fullscreen Toggle
+    document.getElementById('btnFullscreen').addEventListener('click', () => {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen?.();
+      } else {
+        document.exitFullscreen?.();
+      }
+    });
+
+    // Keyboard Shortcuts
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (soloModal.classList.contains('active')) closeSolo();
+        else if (quickAssignBackdrop.classList.contains('active')) closeQuickAssign();
+        else if (settingsModalBackdrop.classList.contains('active')) {
+          if (selectedDvrIndex !== null) {
+            syncCurrentDvrInputsInMemory();
+            selectedDvrIndex = null;
+            settingsSearchInput.value = '';
+            renderSettingsView();
+          } else {
+            closeSettingsModal();
+          }
+        }
+      } else if (e.key === 'ArrowRight' && !quickAssignBackdrop.classList.contains('active') && !settingsModalBackdrop.classList.contains('active') && !soloModal.classList.contains('active')) {
+        document.getElementById('btnSlideNext').click();
+      } else if (e.key === 'ArrowLeft' && !quickAssignBackdrop.classList.contains('active') && !settingsModalBackdrop.classList.contains('active') && !soloModal.classList.contains('active')) {
+        document.getElementById('btnSlidePrev').click();
+      } else if (e.key === 'f' || e.key === 'F') {
+        if (!settingsModalBackdrop.classList.contains('active') && !quickAssignBackdrop.classList.contains('active')) {
+          document.getElementById('btnFullscreen').click();
+        }
+      }
+    });
+  }
+
+  function escapeHtml(str) {
+    return String(str || '').replace(/[&<>"']/g, m => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    })[m]);
+  }
+})();
+</script>
+</body>
+</html>
