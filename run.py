@@ -85,6 +85,13 @@ def check_prerequisites():
         print("[*] Generating configuration files (go2rtc.yaml + cameras.js)...")
         subprocess.run([sys.executable, os.path.join(DIR, "gen_config.py")], check=True)
 
+    # Ensure root path index.html is synchronized with wall.html
+    wall_path = os.path.join(DIR, "wall.html")
+    index_path = os.path.join(DIR, "index.html")
+    if os.path.exists(wall_path):
+        import shutil
+        shutil.copyfile(wall_path, index_path)
+
 
 def print_banner():
     ips = get_all_ips()
@@ -94,12 +101,12 @@ def print_banner():
     print("  🎥 16-CAMERA SECURITY VIDEO WALL IS RUNNING")
     print("=" * 64)
     print("  Local Access:")
-    print(f"    http://localhost:{WEB_PORT}/wall.html\n")
+    print(f"    http://localhost:{WEB_PORT}/\n")
     print("  Network / Remote Access URLs:")
     for ip in ips:
-        print(f"    http://{ip}:{WEB_PORT}/wall.html")
+        print(f"    http://{ip}:{WEB_PORT}/")
     print("\n  Quick Access:")
-    print(f"    🖥️  16-Camera Draggable Wall: http://{primary}:{WEB_PORT}/wall.html")
+    print(f"    🖥️  16-Camera Draggable Wall: http://{primary}:{WEB_PORT}/")
     print(f"    📡 go2rtc Stream Console:     http://{primary}:1984")
     print("=" * 64)
 

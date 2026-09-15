@@ -344,3 +344,18 @@ exit with signal: terminated
 11:07:28.003 INF [webrtc] listen udp addr=172.20.0.1:8555
 11:07:28.003 INF [webrtc] listen udp addr=172.17.0.1:8555
 11:07:28.003 INF [webrtc] listen udp addr=172.19.0.1:8555
+exit with signal: terminated
+11:42:21.909 INF go2rtc platform=linux/amd64 revision=b5948cf version=1.9.14
+11:42:21.909 INF config path=/home/ubuntu/DVR/go2rtc.yaml
+11:42:21.914 INF [api] listen addr=:1984
+11:42:21.919 INF [rtsp] listen addr=:8560
+11:42:21.923 INF [webrtc] listen tcp addr=[::]:8555
+11:42:21.925 INF [webrtc] listen udp addr=192.168.2.50:8555
+11:42:21.925 INF [webrtc] listen udp addr=192.168.2.113:8555
+11:42:21.925 INF [webrtc] listen udp addr=100.105.125.113:8555
+11:42:21.926 INF [webrtc] listen udp addr=172.21.0.1:8555
+11:42:21.927 INF [webrtc] listen udp addr=172.18.0.1:8555
+11:42:21.927 INF [webrtc] listen udp addr=172.20.0.1:8555
+11:42:21.928 INF [webrtc] listen udp addr=172.17.0.1:8555
+11:42:21.928 INF [webrtc] listen udp addr=172.19.0.1:8555
+exit with signal: terminated

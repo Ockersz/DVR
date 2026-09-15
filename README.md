@@ -8,7 +8,7 @@ Aggregates standard **RTSP** feeds using [go2rtc](https://github.com/AlexxIT/go2
 ```
  DVR .20 (Dahua 16ch)   ──┐
  DVR .40 (Dahua 16ch)   ──┤
- DVR .90 (Dahua 16ch)   ──┼─ RTSP ─▶ go2rtc (:1984/:8555) ─▶ WebRTC/MSE ─▶ wall.html (:8085)
+ DVR .90 (Dahua 16ch)   ──┼─ RTSP ─▶ go2rtc (:1984/:8555) ─▶ WebRTC/MSE ─▶ Video Wall (:8085/)
  DVR .95 (Dahua 16ch)   ──┤
  Cam .205/.206/.217 (Hik) ┘
 ```
@@ -54,8 +54,8 @@ This automatically:
 
 Once started, open any browser on the same network:
 
-- **16-Camera Draggable Grid**: `http://<YOUR_IP>:8085/wall.html`
-- **Local Access (on server PC)**: `http://localhost:8085/wall.html`
+- **16-Camera Draggable Grid**: `http://<YOUR_IP>:8085/` (or `http://<YOUR_IP>:8085/wall.html`)
+- **Local Access (on server PC)**: `http://localhost:8085/`
 - **go2rtc Native Stream Admin**: `http://<YOUR_IP>:1984`
 
 ### 🎮 How to Use:
