@@ -1,0 +1,16 @@
+services:
+  dvr-wall:
+    build: .
+    container_name: dvr-video-wall
+    restart: unless-stopped
+    # host networking is recommended for optimal WebRTC low latency & UDP media streaming
+    network_mode: host
+    volumes:
+      - ./config.json:/app/config.json
+      - ./go2rtc.yaml:/app/go2rtc.yaml
+      - ./cameras.js:/app/cameras.js
+    environment:
+      - WEB_PORT=8085
+      - GO2RTC_API_PORT=1984
+      - GO2RTC_WEBRTC_PORT=8555
+      - GO2RTC_RTSP_PORT=8560

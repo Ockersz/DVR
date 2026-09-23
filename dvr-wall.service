@@ -1,0 +1,28 @@
+[Unit]
+Description=Security Operations Video Wall & RTSP Media Stream Engine
+After=network.target network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu/DVR
+ExecStart=/usr/bin/python3 /home/ubuntu/DVR/run.py run
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=always
+RestartSec=5s
+KillMode=mixed
+TimeoutStopSec=10s
+
+# Logging via systemd journal (journalctl -u dvr-wall -f)
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=dvr-wall
+
+# Basic Sandboxing & Permissions
+NoNewPrivileges=true
+ProtectSystem=full
+ReadWritePaths=/home/ubuntu/DVR
+
+[Install]
+WantedBy=multi-user.target

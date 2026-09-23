@@ -1,4 +1,18 @@
+# Runtime PID and log files
 .http.pid
 .go2rtc.pid
+*.pid
+*.log
 go2rtc.log
 wall-server.log
+
+# Private credentials & local config overrides
+.env
+*.local.json
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+
+# OS artifacts
+.DS_Store

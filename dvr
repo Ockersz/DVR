@@ -1,0 +1,152 @@
+#!/usr/bin/env bash
+# ==============================================================================
+# DVR Video Wall - Operator Management CLI
+# ==============================================================================
+set -e
+
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ACTION="${1:-status}"
+
+# Helper to check systemd modes
+is_user_systemd() {
+    [ -f "$HOME/.config/systemd/user/dvr-wall.service" ]
+}
+
+is_system_systemd() {
+    [ -f "/etc/systemd/system/dvr-wall.service" ]
+}
+
+case "$ACTION" in
+    status)
+        python3 "$DIR/run.py" status
+        ;;
+    start)
+        if is_user_systemd; then
+            echo "[*] Starting via systemd user service..."
+            systemctl --user start dvr-wall.service
+            sleep 1
+            python3 "$DIR/run.py" status
+        elif is_system_systemd; then
+            echo "[*] Starting via systemd system service..."
+            sudo systemctl start dvr-wall.service
+            sleep 1
+            python3 "$DIR/run.py" status
+        else
+            python3 "$DIR/run.py" start
+        fi
+        ;;
+    stop)
+        if is_user_systemd; then
+            echo "[*] Stopping systemd user service..."
+            systemctl --user stop dvr-wall.service || true
+        elif is_system_systemd; then
+            echo "[*] Stopping systemd service..."
+            sudo systemctl stop dvr-wall.service || true
+        fi
+        python3 "$DIR/run.py" stop
+        ;;
+    restart|reload)
+        echo "[*] Compiling configs..."
+        python3 "$DIR/gen_config.py"
+        if is_user_systemd; then
+            echo "[*] Restarting systemd user service..."
+            systemctl --user restart dvr-wall.service
+            sleep 1
+            python3 "$DIR/run.py" status
+        elif is_system_systemd; then
+            echo "[*] Restarting systemd service..."
+            sudo systemctl restart dvr-wall.service
+            sleep 1
+            python3 "$DIR/run.py" status
+        else
+            python3 "$DIR/run.py" restart
+        fi
+        ;;
+    logs|log)
+        if is_user_systemd; then
+            echo "[*] Streaming live user journal logs (Ctrl+C to exit)..."
+            journalctl --user -u dvr-wall.service -f -n 50
+        elif is_system_systemd; then
+            echo "[*] Streaming live system journal logs (Ctrl+C to exit)..."
+            journalctl -u dvr-wall.service -f -n 50
+        else
+            echo "[*] Streaming live local log files (Ctrl+C to exit)..."
+            tail -f "$DIR/wall-server.log" 2>/dev/null || journalctl -u dvr-wall.service -f
+        fi
+        ;;
+    health|test)
+        python3 "$DIR/run.py" health
+        ;;
+    config|edit)
+        EDITOR_BIN="${EDITOR:-nano}"
+        echo "[*] Opening configuration in $EDITOR_BIN..."
+        "$EDITOR_BIN" "$DIR/config.json"
+        echo "[*] Re-generating stream mappings..."
+        python3 "$DIR/gen_config.py"
+        echo "[*] Restarting service..."
+        if is_user_systemd; then
+            systemctl --user restart dvr-wall.service
+        elif is_system_systemd; then
+            sudo systemctl restart dvr-wall.service
+        else
+            python3 "$DIR/run.py" restart
+        fi
+        echo "[✓] Configuration applied successfully!"
+        ;;
+    discover)
+        echo "[*] Discovering live camera channels from LAN DVRs..."
+        python3 "$DIR/gen_config.py" --discover --save
+        echo "[*] Reloading services..."
+        if is_user_systemd; then
+            systemctl --user restart dvr-wall.service
+        elif is_system_systemd; then
+            sudo systemctl restart dvr-wall.service
+        else
+            python3 "$DIR/run.py" restart
+        fi
+        echo "[✓] Camera inventory updated and reloaded!"
+        ;;
+    firewall)
+        echo "Recommended UFW Firewall Rules for Ubuntu Server:"
+        echo "  sudo ufw allow 8085/tcp comment 'DVR Wall Web UI'"
+        echo "  sudo ufw allow 1984/tcp comment 'go2rtc API / Signaling'"
+        echo "  sudo ufw allow 8555/tcp comment 'go2rtc WebRTC TCP'"
+        echo "  sudo ufw allow 8555/udp comment 'go2rtc WebRTC UDP'"
+        echo "  sudo ufw allow 8560/tcp comment 'go2rtc RTSP internal'"
+        read -p "Would you like to apply these rules now? (y/N): " -r CONFIRM
+        if [[ "$CONFIRM" =~ ^[Yy]$ ]]; then
+            sudo ufw allow 8085/tcp comment 'DVR Wall Web UI'
+            sudo ufw allow 1984/tcp comment 'go2rtc API / Signaling'
+            sudo ufw allow 8555/tcp comment 'go2rtc WebRTC TCP'
+            sudo ufw allow 8555/udp comment 'go2rtc WebRTC UDP'
+            sudo ufw allow 8560/tcp comment 'go2rtc RTSP internal'
+            echo "[✓] Firewall rules applied."
+        fi
+        ;;
+    urls|ip)
+        python3 "$DIR/run.py" status
+        ;;
+    help|--help|-h)
+        echo "=================================================================="
+        echo "  🎥 DVR Video Wall - Command Line Interface"
+        echo "=================================================================="
+        echo "Usage: dvr <command>"
+        echo ""
+        echo "Commands:"
+        echo "  status      View running status, systemd state, PIDs, and active URLs"
+        echo "  start       Start background service (systemd or daemon)"
+        echo "  stop        Stop background service"
+        echo "  restart     Re-compile configs and restart the service"
+        echo "  logs        Stream live server logs in real-time"
+        echo "  health      Run diagnostics on web server and stream engine"
+        echo "  config      Edit config.json in editor and auto-reload"
+        echo "  discover    Scan DVRs on LAN for updated channel names"
+        echo "  firewall    Show and configure UFW firewall rules"
+        echo "=================================================================="
+        ;;
+    *)
+        echo "Unknown command: $ACTION"
+        echo "Run 'dvr help' to view available commands."
+        exit 1
+        ;;
+esac

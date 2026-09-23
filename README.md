@@ -1,97 +1,191 @@
-# Security Operations Video Wall (Mixed Dahua + Hikvision)
+# Security Operations Video Wall (DVR / NVR Aggregator)
 
-One browser-based video wall displaying cameras from multiple recorders regardless of brand.
-Aggregates standard **RTSP** feeds using [go2rtc](https://github.com/AlexxIT/go2rtc) and serves them as low-latency **WebRTC** (with MSE fallback).
+An enterprise-ready, low-latency browser video wall aggregating standard **RTSP** camera feeds from multiple recorders (Dahua, Hikvision, Uniview, generic ONVIF) using [go2rtc](https://github.com/AlexxIT/go2rtc) and WebRTC streaming.
 
-**Dynamic & Cross-platform:** Automatically detects and binds to whatever IP or network interface you run on (LAN, Wi-Fi, Tailscale, VPN, localhost). No hardcoded IPs needed.
+Designed to run as a native service on **Ubuntu Server (20.04 / 22.04 / 24.04 LTS)** or in Docker.
 
 ```
  DVR .20 (Dahua 16ch)   ──┐
  DVR .40 (Dahua 16ch)   ──┤
- DVR .90 (Dahua 16ch)   ──┼─ RTSP ─▶ go2rtc (:1984/:8555) ─▶ WebRTC/MSE ─▶ Video Wall (:8085/)
+ DVR .90 (Dahua 16ch)   ──┼─ RTSP ─▶ go2rtc (:1984/:8555) ─▶ WebRTC ─▶ Video Wall UI (:8085/)
  DVR .95 (Dahua 16ch)   ──┤
- Cam .205/.206/.217 (Hik) ┘
+ Cam .205/.206/.217 ──────┘
 ```
 
 ---
 
-## 🚀 Quick Start (1 or 2 Commands)
+## 🚀 Quick Start for Ubuntu Server
 
-### 1. Start the Video Wall
+### 1-Command Automated Installation
+
+Run the installer on your Ubuntu server:
+
 ```bash
-./start.sh
-```
-*(Or on any OS via Python: `python3 run.py`)*
+# System-wide installation (with sudo)
+sudo ./install.sh
 
-This automatically:
-- Checks prerequisites and sets executable permissions.
-- Builds `go2rtc.yaml` and `cameras.js` if not already present.
-- Starts `go2rtc` media engine and the HTTP web server on port `8085` (non-conflicting).
-- Detects all your server's network IPs dynamically and prints ready-to-click URLs.
-
-### 2. Stop the Video Wall
-```bash
-./stop.sh
+# Or non-root user mode (no sudo needed)
+./install.sh --user
 ```
-*(Or `./start.sh stop` / `python3 run.py stop`)*
+
+**What the installer does automatically:**
+- Detects system CPU architecture (`x86_64` / `ARM64`) and configures `go2rtc`.
+- Installs dependencies (`python3`, `curl`).
+- Generates `go2rtc.yaml` and `cameras.js` from `config.json`.
+- Configures and enables the **systemd service (`dvr-wall.service`)** to start on boot and auto-restart on crashes.
+- Installs the system-wide **`dvr` management CLI** into `/usr/local/bin/dvr`.
+- Configures UFW firewall rules for all required media ports.
 
 ---
 
-## 🛠️ Management Commands
+## 🛠️ Management CLI (`dvr`)
+
+Once installed, manage the video wall system with the `dvr` command:
 
 | Command | Action |
 |---|---|
-| `./start.sh` | Start services in background (daemon mode) |
-| `./start.sh stop` | Stop all background services |
-| `./start.sh restart` | Restart all services |
-| `./start.sh status` | Check running state, PIDs, and active host IPs |
-| `./start.sh logs` | View live combined log output |
-| `python3 run.py` | Interactive foreground mode (press `Ctrl+C` to stop) |
+| `dvr status` | View running status, systemd state, PIDs, and active URLs |
+| `dvr logs` | Stream live server logs in real-time (`journalctl`) |
+| `dvr restart` | Re-compile configurations and restart services |
+| `dvr stop` | Stop all video wall background services |
+| `dvr start` | Start the background service |
+| `dvr health` | Run instant health diagnostics on web & stream engines |
+| `dvr edit` | Open `config.json` in your editor and auto-reload changes |
+| `dvr discover` | Scan LAN DVRs to automatically fetch camera channel names |
+| `dvr firewall` | View or apply recommended UFW firewall rules |
 
 ---
 
 ## 🌐 Accessing the Video Wall
 
-Once started, open any browser on the same network:
+Open any web browser on the same network:
 
-- **16-Camera Draggable Grid**: `http://<YOUR_IP>:8085/` (or `http://<YOUR_IP>:8085/wall.html`)
-- **Local Access (on server PC)**: `http://localhost:8085/`
-- **go2rtc Native Stream Admin**: `http://<YOUR_IP>:1984`
+- **16-Camera Video Wall**: `http://<SERVER_IP>:8085/`
+- **go2rtc Stream Console**: `http://<SERVER_IP>:1984/`
+- **Health Diagnostic**: `http://<SERVER_IP>:8085/health`
 
-### 🎮 How to Use:
-- **Drag & Drop**: Click and drag any camera tile to swap its position in the 4x4 grid in real-time. Positions are automatically saved.
-- **Slide Navigation**: Use the slide dropdown or `◀` / `▶` buttons (or `Left`/`Right` arrow keys) to toggle between sets of 16 cameras (e.g. Slide 1: 1–16, Slide 2: 17–32, etc.).
-- **Solo HD View**: Double-click or click `⤢` on any tile to view high-resolution main stream. Press `Esc` or `← Back` to return.
-- **Assign / Rename**: Hover on any tile and click `⚙` to reassign to any channel from the 112-camera inventory or rename its label.
-- **Reset Layout**: Click `↺ Reset Layout` in the top bar to restore default slot arrangement.
-- **Fullscreen**: Click `⛶ Fullscreen` or press `F` / `F11`.
-
----
-
-## 📁 Key Files
-
-| File | Description |
-|---|---|
-| [`gen_config.py`](gen_config.py) | Camera inventory & credentials generator (`python3 gen_config.py`) |
-| [`run.py`](run.py) | Cross-platform Python launcher and process manager |
-| [`start.sh`](start.sh) / [`stop.sh`](stop.sh) | Quick shell lifecycle scripts |
-| [`go2rtc.yaml`](go2rtc.yaml) | Stream routing configuration for go2rtc |
-| [`cameras.js`](cameras.js) | Dynamic client metadata and camera mappings |
-| [`wall.html`](wall.html) | Video wall frontend interface |
+### 🎮 Interface Features:
+- **Interactive 16-Camera Grid**: Low-latency WebRTC streams with MSE fallback.
+- **Drag & Drop**: Reorder or swap camera tiles directly in the browser; layouts persist in local storage.
+- **Slide Carousel**: Switch between pages of 16 cameras (e.g. 1–16, 17–32, etc.) using `◀` / `▶` buttons or keyboard arrow keys.
+- **Solo HD View**: Double-click or click `⤢` on any camera tile to open its high-resolution main stream.
+- **Channel Reassignment**: Hover on any tile and click `⚙` to reassign or rename channels.
 
 ---
 
 ## ⚙️ Configuration & Adding Cameras
 
-1. Edit `INVENTORY` in [`gen_config.py`](gen_config.py) to add DVR credentials and camera names.
-2. Re-generate configuration:
-   ```bash
-   python3 gen_config.py
-   # Or query DVRs live for channel names:
-   python3 gen_config.py --discover
-   ```
-3. Restart services:
-   ```bash
-   ./start.sh restart
-   ```
+The primary configuration file is [`config.json`](config.json):
 
+```json
+{
+  "server": {
+    "web_port": 8085,
+    "api_port": 1984,
+    "webrtc_port": 8555,
+    "rtsp_port": 8560,
+    "transcode": false,
+    "hwaccel": "vaapi"
+  },
+  "auth": {
+    "default_user": "admin",
+    "default_password": "YOUR_PASSWORD"
+  },
+  "dvrs": [
+    {
+      "name": "dvr20",
+      "title": "DVR .20 (Dahua)",
+      "ip": "192.168.2.20",
+      "brand": "dahua",
+      "https": true,
+      "channels": [
+        {"channel": 1, "name": "Gate 1"},
+        {"channel": 2, "name": "Parking"}
+      ]
+    }
+  ]
+}
+```
+
+### Applying Changes:
+```bash
+# Option 1: Edit interactively
+dvr edit
+
+# Option 2: Edit file directly, then recompile & restart
+nano config.json
+dvr restart
+```
+
+### Auto-Discover Camera Names from DVRs:
+If your DVRs support Dahua CGI or Hikvision ISAPI, automatically pull all channel labels:
+```bash
+dvr discover
+```
+
+---
+
+## 🐳 Docker Deployment (Alternative)
+
+If you prefer running via Docker Compose:
+
+```bash
+# Start container
+docker compose up -d
+
+# View container logs
+docker compose logs -f
+
+# Restart container
+docker compose restart
+```
+
+*Note: The container uses `network_mode: host` to optimize WebRTC UDP streaming performance.*
+
+---
+
+## 🛡️ Firewall & Ports Reference
+
+If running a firewall on Ubuntu Server, ensure the following ports are open:
+
+| Port | Protocol | Purpose |
+|---|---|---|
+| `8085` | TCP | Video Wall Web Dashboard |
+| `1984` | TCP | go2rtc API & WebRTC signaling |
+| `8555` | TCP / UDP | WebRTC media transmission |
+| `8560` | TCP | Internal RTSP proxy |
+
+To automatically configure UFW:
+```bash
+dvr firewall
+```
+
+---
+
+## 🔒 Optional: Nginx Reverse Proxy & SSL
+
+An Nginx configuration template is provided in [`nginx/dvr-wall.conf`](nginx/dvr-wall.conf) to serve the entire app on port `80`/`443` with Let's Encrypt SSL:
+
+```bash
+sudo cp nginx/dvr-wall.conf /etc/nginx/sites-available/dvr-wall
+sudo ln -s /etc/nginx/sites-available/dvr-wall /etc/nginx/sites-enabled/
+sudo nginx -t && sudo systemctl reload nginx
+
+# Enable SSL with Certbot
+sudo certbot --nginx -d your-domain.com
+```
+
+---
+
+## 🩺 Diagnostics & Troubleshooting
+
+```bash
+# Run health check
+dvr health
+
+# Check systemd service status
+systemctl status dvr-wall
+
+# Inspect live journal logs
+journalctl -u dvr-wall -f -n 100
+```

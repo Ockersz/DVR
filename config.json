@@ -1,0 +1,118 @@
+{
+  "server": {
+    "web_port": 8085,
+    "api_port": 1984,
+    "webrtc_port": 8555,
+    "rtsp_port": 8560,
+    "transcode": false,
+    "hwaccel": "vaapi",
+    "log_level": "info"
+  },
+  "auth": {
+    "default_user": "admin",
+    "default_password": "Araliyaflower#24"
+  },
+  "dvrs": [
+    {
+      "name": "dvr20",
+      "title": "DVR .20 (Dahua)",
+      "ip": "192.168.2.20",
+      "brand": "dahua",
+      "https": true,
+      "user": "",
+      "password": "",
+      "channels": [
+        {"channel": 1, "name": "SQ14"},
+        {"channel": 2, "name": "2nd gate outside"},
+        {"channel": 3, "name": "SQ13"},
+        {"channel": 4, "name": "main gate inside"},
+        {"channel": 5, "name": "SQ12"},
+        {"channel": 6, "name": "guardroom viwe"},
+        {"channel": 7, "name": "canteen in"},
+        {"channel": 8, "name": "woshroom aria"},
+        {"channel": 9, "name": "parking"},
+        {"channel": 10, "name": "scale"},
+        {"channel": 11, "name": ""},
+        {"channel": 12, "name": "kitchen"},
+        {"channel": 13, "name": "canteen inside"},
+        {"channel": 14, "name": "genarator"},
+        {"channel": 15, "name": ""},
+        {"channel": 16, "name": ""}
+      ]
+    },
+    {
+      "name": "dvr40",
+      "title": "DVR .40 (Dahua)",
+      "ip": "192.168.2.40",
+      "brand": "dahua",
+      "https": false,
+      "user": "",
+      "password": "",
+      "channels": [
+        {"channel": 1, "name": ""},
+        {"channel": 2, "name": ""},
+        {"channel": 3, "name": ""},
+        {"channel": 4, "name": ""},
+        {"channel": 5, "name": ""},
+        {"channel": 6, "name": ""},
+        {"channel": 7, "name": "SQ06"},
+        {"channel": 8, "name": "SQ03"},
+        {"channel": 9, "name": ""},
+        {"channel": 10, "name": "SQ05"},
+        {"channel": 11, "name": "SQ04"},
+        {"channel": 12, "name": ""},
+        {"channel": 13, "name": "SQ01"},
+        {"channel": 14, "name": ""},
+        {"channel": 15, "name": ""},
+        {"channel": 16, "name": "SQ09"}
+      ]
+    },
+    {
+      "name": "dvr90",
+      "title": "DVR .90 (Dahua)",
+      "ip": "192.168.2.90",
+      "brand": "dahua",
+      "https": false,
+      "user": "",
+      "password": "",
+      "channels": []
+    },
+    {
+      "name": "dvr95",
+      "title": "DVR .95 (Dahua)",
+      "ip": "192.168.2.95",
+      "brand": "dahua",
+      "https": false,
+      "user": "",
+      "password": "",
+      "channels": []
+    },
+    {
+      "name": "hik205",
+      "title": "DVR .205 (Hikvision)",
+      "ip": "192.168.2.205",
+      "brand": "hikvision",
+      "user": "",
+      "password": "",
+      "channels": []
+    },
+    {
+      "name": "hik206",
+      "title": "DVR .206 (Hikvision)",
+      "ip": "192.168.2.206",
+      "brand": "hikvision",
+      "user": "",
+      "password": "",
+      "channels": []
+    },
+    {
+      "name": "hik217",
+      "title": "DVR .217 (Hikvision)",
+      "ip": "192.168.2.217",
+      "brand": "hikvision",
+      "user": "",
+      "password": "",
+      "channels": []
+    }
+  ]
+}
