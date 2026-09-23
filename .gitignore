@@ -1,0 +1,4 @@
+.http.pid
+.go2rtc.pid
+go2rtc.log
+wall-server.log
