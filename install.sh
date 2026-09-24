@@ -2,10 +2,9 @@
 # ==============================================================================
 # Security Operations Video Wall - Production Installer for Ubuntu Server
 # ==============================================================================
-set -e
-
-DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+DIR="$(cd "$(dirname "$0")" && pwd)"
 cd "$DIR"
+
 
 USER_MODE=false
 for arg in "$@"; do

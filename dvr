@@ -2,9 +2,8 @@
 # ==============================================================================
 # DVR Video Wall - Operator Management CLI
 # ==============================================================================
-set -e
+DIR="$(cd "$(dirname "$0")" && pwd)"
 
-DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ACTION="${1:-status}"
 
 # Helper to check systemd modes
