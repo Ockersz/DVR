@@ -2,7 +2,9 @@
 # ==============================================================================
 # DVR Video Wall - Operator Management CLI
 # ==============================================================================
-DIR="$(cd "$(dirname "$0")" && pwd)"
+TARGET="$(readlink -f "$0" 2>/dev/null || realpath "$0" 2>/dev/null || echo "$0")"
+DIR="$(cd "$(dirname "$TARGET")" && pwd)"
+
 
 ACTION="${1:-status}"
 

@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-# ==============================================================================
-# Security Operations Video Wall - Production Installer for Ubuntu Server
-# ==============================================================================
-DIR="$(cd "$(dirname "$0")" && pwd)"
+TARGET="$(readlink -f "$0" 2>/dev/null || realpath "$0" 2>/dev/null || echo "$0")"
+DIR="$(cd "$(dirname "$TARGET")" && pwd)"
 cd "$DIR"
+
+
 
 
 USER_MODE=false
