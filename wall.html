@@ -921,11 +921,12 @@
     <div class="spacer"></div>
 
     <!-- Stream Mode Engine Selector -->
-    <select class="slide-select" id="streamModeSelect" title="Streaming Protocol (MSE / WebRTC / MJPEG)">
-      <option value="auto">Auto (MSE / WebRTC)</option>
-      <option value="mse">MSE Only</option>
-      <option value="webrtc">WebRTC Only</option>
-      <option value="mjpeg">MJPEG (TV Compatible)</option>
+    <select class="slide-select" id="streamModeSelect" title="Streaming Protocol / TV Mode">
+      <option value="auto">Auto (Smart Engine)</option>
+      <option value="mjpeg">⚡ TV Mode: Live MJPEG (Zero Decoder Lag)</option>
+      <option value="snapshot">📺 TV Mode: Snapshots (Ultra Low RAM)</option>
+      <option value="mse">Live Video (MSE)</option>
+      <option value="webrtc">Live Video (WebRTC)</option>
     </select>
 
     <!-- Settings Button -->
@@ -1211,10 +1212,11 @@
   document.head.appendChild(sc);
 
   function getStreamModes() {
+    if (currentStreamMode === 'mjpeg') return 'mjpeg';
+    if (currentStreamMode === 'snapshot') return 'snapshot';
     if (currentStreamMode === 'mse') return 'mse,mp4,mjpeg';
     if (currentStreamMode === 'webrtc') return 'webrtc,mse,mjpeg';
-    if (currentStreamMode === 'mjpeg') return 'mjpeg';
-    return 'mse,webrtc,mp4,mjpeg';
+    return isSmartTV ? 'mjpeg' : 'mse,webrtc,mp4,mjpeg';
   }
 
   function makeStream(srcName, mode) {

@@ -29,7 +29,7 @@ export class VideoRTC extends HTMLElement {
         ];
 
         /**
-         * [config] Supported modes (mse, webrtc, mp4, mjpeg).
+         * [config] Supported modes (mse, webrtc, mp4, mjpeg, snapshot).
          * @type {string}
          */
         this.mode = 'mse,webrtc,mp4,mjpeg';
@@ -54,6 +54,7 @@ export class VideoRTC extends HTMLElement {
         this.pcState = WebSocket.CLOSED;
 
         this.video = null;
+        this.img = null;
         this.ws = null;
         this.wsURL = '';
         this.pc = null;
@@ -62,6 +63,7 @@ export class VideoRTC extends HTMLElement {
 
         this.disconnectTID = 0;
         this.reconnectTID = 0;
+        this._snapshotTimer = null;
 
         this.ondata = null;
         this.onmessage = null;
@@ -182,13 +184,20 @@ export class VideoRTC extends HTMLElement {
         this.video.setAttribute('playsinline', '');
         this.video.setAttribute('webkit-playsinline', '');
         this.video.setAttribute('preload', 'auto');
-
         this.video.style.display = 'block';
         this.video.style.width = '100%';
         this.video.style.height = '100%';
         this.video.style.objectFit = 'contain';
 
+        this.img = document.createElement('img');
+        this.img.style.display = 'none';
+        this.img.style.width = '100%';
+        this.img.style.height = '100%';
+        this.img.style.objectFit = 'contain';
+        this.img.style.background = '#000';
+
         this.appendChild(this.video);
+        this.appendChild(this.img);
 
         this.video.addEventListener('error', ev => {
             console.warn('[VideoRTC] Video element error:', this.video.error);
@@ -219,7 +228,15 @@ export class VideoRTC extends HTMLElement {
     }
 
     onconnect() {
-        if (!this.isConnected || !this.wsURL || this.ws || this.pc) return false;
+        if (!this.isConnected || !this.wsURL) return false;
+
+        const modePref = (this.mode || '').toLowerCase();
+        if (modePref === 'snapshot') {
+            this.onsnapshot();
+            return true;
+        }
+
+        if (this.ws || this.pc) return false;
 
         this.wsState = WebSocket.CONNECTING;
         this.connectTS = Date.now();
@@ -241,6 +258,11 @@ export class VideoRTC extends HTMLElement {
 
     ondisconnect() {
         this.wsState = WebSocket.CLOSED;
+        if (this._snapshotTimer) {
+            clearInterval(this._snapshotTimer);
+            this._snapshotTimer = null;
+        }
+
         if (this.ws) {
             try { this.ws.close(); } catch(e) {}
             this.ws = null;
@@ -295,6 +317,11 @@ export class VideoRTC extends HTMLElement {
 
         const modePref = this.mode.toLowerCase();
 
+        if (modePref === 'snapshot') {
+            this.onsnapshot();
+            return ['snapshot'];
+        }
+
         if (modePref === 'mjpeg' || modePref.startsWith('mjpeg')) {
             this.onmjpeg();
             return ['mjpeg'];
@@ -341,6 +368,9 @@ export class VideoRTC extends HTMLElement {
     }
 
     onmse() {
+        if (this.img) this.img.style.display = 'none';
+        if (this.video) this.video.style.display = 'block';
+
         let ms;
         const hasManaged = ('ManagedMediaSource' in window);
         const MediaSourceClass = hasManaged ? window.ManagedMediaSource : window.MediaSource;
@@ -406,12 +436,10 @@ export class VideoRTC extends HTMLElement {
                         const start0 = sb.buffered.start(0);
                         const end = sb.buffered.end(sb.buffered.length - 1);
 
-                        // Smart TV Live Sync: Jump immediately into active buffered window!
                         if (this.video.currentTime < start0 || this.video.currentTime > end || (end - this.video.currentTime) > 4) {
                             this.video.currentTime = Math.max(start0, end - 0.3);
                         }
 
-                        // Trim old segments (keep last 6 seconds)
                         const keepStart = Math.max(start0, end - 6);
                         if (keepStart > start0 && !sb.updating) {
                             sb.remove(start0, keepStart);
@@ -438,6 +466,9 @@ export class VideoRTC extends HTMLElement {
     }
 
     onwebrtc() {
+        if (this.img) this.img.style.display = 'none';
+        if (this.video) this.video.style.display = 'block';
+
         let pc;
         try {
             pc = new RTCPeerConnection(this.pcConfig);
@@ -527,21 +558,62 @@ export class VideoRTC extends HTMLElement {
     }
 
     onmjpeg() {
+        if (this.video) this.video.style.display = 'none';
+        if (this.img) this.img.style.display = 'block';
+
         this.ondata = data => {
-            if (this.video) {
-                this.video.controls = false;
+            if (this.img) {
                 try {
                     const blob = new Blob([data], {type: 'image/jpeg'});
                     const oldUrl = this._blobUrl;
                     this._blobUrl = URL.createObjectURL(blob);
-                    this.video.poster = this._blobUrl;
-                    if (oldUrl) URL.revokeObjectURL(oldUrl);
+                    this.img.src = this._blobUrl;
+                    if (oldUrl) {
+                        setTimeout(() => { try { URL.revokeObjectURL(oldUrl); } catch(e){} }, 80);
+                    }
                 } catch (e) {
-                    this.video.poster = 'data:image/jpeg;base64,' + VideoRTC.btoa(data);
+                    this.img.src = 'data:image/jpeg;base64,' + VideoRTC.btoa(data);
                 }
             }
         };
         this.send({type: 'mjpeg'});
+    }
+
+    onsnapshot() {
+        if (this.video) this.video.style.display = 'none';
+        if (this.img) this.img.style.display = 'block';
+        if (this.ws) { try { this.ws.close(); } catch(e){} this.ws = null; }
+
+        if (this._snapshotTimer) clearInterval(this._snapshotTimer);
+
+        let srcName = '';
+        try {
+            const parsed = new URL(this.wsURL, window.location.href);
+            srcName = parsed.searchParams.get('src') || '';
+        } catch(e) {
+            const m = this.wsURL.match(/src=([^&]+)/);
+            if (m) srcName = decodeURIComponent(m[1]);
+        }
+
+        if (!srcName) return;
+
+        const hostUrl = this.wsURL.replace(/^ws/, 'http').split('/api/')[0];
+        const snapshotUrl = hostUrl + '/api/frame.jpeg?src=' + encodeURIComponent(srcName);
+
+        const updateFrame = () => {
+            if (!this.isConnected || this.mode !== 'snapshot') {
+                if (this._snapshotTimer) clearInterval(this._snapshotTimer);
+                return;
+            }
+            const nextImg = new Image();
+            nextImg.onload = () => {
+                if (this.img) this.img.src = nextImg.src;
+            };
+            nextImg.src = snapshotUrl + '&_t=' + Date.now();
+        };
+
+        updateFrame();
+        this._snapshotTimer = setInterval(updateFrame, 1500);
     }
 
     onhls() {
